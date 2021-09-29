@@ -20,7 +20,15 @@ jobs:
         keyvault: "devopsakv001"
         secrets: 'terraformrg, SubscriptionID, DevOps-PipelineSP-ID, DevOps-PipelineSP-Secret, tenantid, terraformstorageaccount, tf-storage-key, tfplancontainer, tfstatecontainer'
       id: myGetSecretAction
-       
+      
+    - uses: cschleiden/replace-tokens@v1
+      with:
+        files: '["**/*.tf"]'
+      env:
+        terraformstorageaccount: ${{ steps.GetSecretAction.outputs.terraformstorageaccount }}
+        tfstatecontainer: ${{ steps.GetSecretAction.outputs.tfstatecontainer }}
+        tf-storage-key: ${{ steps.GetSecretAction.outputs.tf-storage-key }}
+        
     - uses: hashicorp/setup-terraform@v1
       with: 
         terraform_version: 0.15.3
