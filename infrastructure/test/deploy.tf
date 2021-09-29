@@ -10,7 +10,7 @@ terraform {
  backend "azurerm" {
   storage_account_name = "#{terraformstorageaccount}#"
   container_name       = "#{tfstatecontainer}#"
-  key                  = "test-rg.tfstate"
+  key                  = "${{ secrets.tfstatename }}"
   access_key  = "#{tf-storage-key}#"
  }
 required_providers {
@@ -24,6 +24,6 @@ required_providers {
 
 #Resource Group
 resource "azurerm_resource_group" "ResourceGroup1" {
-  name     = "test-rg"
+  name     = "${{ secrets.rgname1 }}"
   location = "West Europe"
 }
