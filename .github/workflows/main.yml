@@ -29,6 +29,8 @@ jobs:
         terraformstorageaccount: ${{ steps.myGetSecretAction.outputs.terraformstorageaccount }}
         tfstatecontainer: ${{ steps.myGetSecretAction.outputs.tfstatecontainer }}
         tf-storage-key: ${{ steps.myGetSecretAction.outputs.tf-storage-key }}
+        tfstatename: ${{ secrets.tfstatename }}
+        rgname1: ${{ secrets.rgname1 }}
         
     - uses: hashicorp/setup-terraform@v1
       with: 
