@@ -1,0 +1,82 @@
+name: Example2
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+        working-directory: "./infrastructure/test2"
+    steps:
+    # checkout the repo
+    - uses: actions/checkout@v2
+    - uses: Azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+    - uses: Azure/get-keyvault-secrets@v1
+      with: 
+        keyvault: "devopsakv001"
+        secrets: 'terraformrg, SubscriptionID, DevOps-PipelineSP-ID, DevOps-PipelineSP-Secret, tenantid, terraformstorageaccount, tf-storage-key, tfplancontainer, tfstatecontainer'
+      id: myGetSecretAction
+      
+    - uses: cschleiden/replace-tokens@v1
+      with:
+        files: '["**/*.tf"]'
+      env:
+        terraformstorageaccount: ${{ steps.myGetSecretAction.outputs.terraformstorageaccount }}
+        tfstatecontainer: ${{ steps.myGetSecretAction.outputs.tfstatecontainer }}
+        tf-storage-key: ${{ steps.myGetSecretAction.outputs.tf-storage-key }}
+        
+    - uses: hashicorp/setup-terraform@v1
+      with: 
+        terraform_version: 0.15.3
+      env:
+        ARM_CLIENT_ID: ${{ steps.myGetSecretAction.outputs.DevOps-PipelineSP-ID }}
+        ARM_CLIENT_SECRET: ${{ steps.myGetSecretAction.outputs.DevOps-PipelineSP-Secret }}
+        ARM_SUBSCRIPTION_ID: ${{ steps.myGetSecretAction.outputs.SubscriptionID }}
+        ARM_TENANT_ID: ${{ steps.myGetSecretAction.outputs.tenantid }}
+
+    - name: Terraform Init
+      id: init
+      run: terraform init
+      env:
+        ARM_CLIENT_ID: ${{ steps.myGetSecretAction.outputs.DevOps-PipelineSP-ID }}
+        ARM_CLIENT_SECRET: ${{ steps.myGetSecretAction.outputs.DevOps-PipelineSP-Secret }}
+        ARM_SUBSCRIPTION_ID: ${{ steps.myGetSecretAction.outputs.SubscriptionID }}
+        ARM_TENANT_ID: ${{ steps.myGetSecretAction.outputs.tenantid }}
+
+    - name: Terraform Format
+      id: fmt
+      run: terraform fmt
+      env:
+        ARM_CLIENT_ID: ${{ steps.myGetSecretAction.outputs.DevOps-PipelineSP-ID }}
+        ARM_CLIENT_SECRET: ${{ steps.myGetSecretAction.outputs.DevOps-PipelineSP-Secret }}
+        ARM_SUBSCRIPTION_ID: ${{ steps.myGetSecretAction.outputs.SubscriptionID }}
+        ARM_TENANT_ID: ${{ steps.myGetSecretAction.outputs.tenantid }}
+
+
+    - name: Terraform Plan
+      id: plan
+      run: terraform plan -no-color
+      continue-on-error: true
+      env:
+        ARM_CLIENT_ID: ${{ steps.myGetSecretAction.outputs.DevOps-PipelineSP-ID }}
+        ARM_CLIENT_SECRET: ${{ steps.myGetSecretAction.outputs.DevOps-PipelineSP-Secret }}
+        ARM_SUBSCRIPTION_ID: ${{ steps.myGetSecretAction.outputs.SubscriptionID }}
+        ARM_TENANT_ID: ${{ steps.myGetSecretAction.outputs.tenantid }}
+
+    - name: Terraform Plan Status
+      if: steps.plan.outcome == 'failure'
+      run: exit 1
+       
+      
+      
+    - name: Terraform Apply
+      run: terraform apply -auto-approve
+      env:
+        ARM_CLIENT_ID: ${{ steps.myGetSecretAction.outputs.DevOps-PipelineSP-ID }}
+        ARM_CLIENT_SECRET: ${{ steps.myGetSecretAction.outputs.DevOps-PipelineSP-Secret }}
+        ARM_SUBSCRIPTION_ID: ${{ steps.myGetSecretAction.outputs.SubscriptionID }}
+        ARM_TENANT_ID: ${{ steps.myGetSecretAction.outputs.tenantid }}
