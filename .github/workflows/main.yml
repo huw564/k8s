@@ -9,7 +9,7 @@ jobs:
     defaults:
       run:
         shell: bash
-        working-directory: "./infrastructure/test"
+        working-directory: "./infrastructure/test-rg"
     steps:
     # checkout the repo
     - uses: actions/checkout@v2
