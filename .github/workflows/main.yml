@@ -25,36 +25,36 @@ jobs:
       with:
         files: '["**/*.tf"]'
       env:
-        terraformstorageaccount: ${{ steps.GetSecretAction.outputs.terraformstorageaccount }}
-        tfstatecontainer: ${{ steps.GetSecretAction.outputs.tfstatecontainer }}
-        tf-storage-key: ${{ steps.GetSecretAction.outputs.tf-storage-key }}
+        terraformstorageaccount: ${{ steps.myGetSecretAction.outputs.terraformstorageaccount }}
+        tfstatecontainer: ${{ steps.myGetSecretAction.outputs.tfstatecontainer }}
+        tf-storage-key: ${{ steps.myGetSecretAction.outputs.tf-storage-key }}
         
     - uses: hashicorp/setup-terraform@v1
       with: 
         terraform_version: 0.15.3
       env:
-        ARM_CLIENT_ID: ${{ steps.GetSecretAction.outputs.DevOps-PipelineSP-ID }}
-        ARM_CLIENT_SECRET: ${{ steps.GetSecretAction.outputs.DevOps-PipelineSP-Secret }}
-        ARM_SUBSCRIPTION_ID: ${{ steps.GetSecretAction.outputs.SubscriptionID }}
-        ARM_TENANT_ID: ${{ steps.GetSecretAction.outputs.tenantid }}
+        ARM_CLIENT_ID: ${{ steps.myGetSecretAction.outputs.DevOps-PipelineSP-ID }}
+        ARM_CLIENT_SECRET: ${{ steps.myGetSecretAction.outputs.DevOps-PipelineSP-Secret }}
+        ARM_SUBSCRIPTION_ID: ${{ steps.myGetSecretAction.outputs.SubscriptionID }}
+        ARM_TENANT_ID: ${{ steps.myGetSecretAction.outputs.tenantid }}
 
     - name: Terraform Init
       id: init
       run: terraform init
       env:
-        ARM_CLIENT_ID: ${{ steps.GetSecretAction.outputs.DevOps-PipelineSP-ID }}
-        ARM_CLIENT_SECRET: ${{ steps.GetSecretAction.outputs.DevOps-PipelineSP-Secret }}
-        ARM_SUBSCRIPTION_ID: ${{ steps.GetSecretAction.outputs.SubscriptionID }}
-        ARM_TENANT_ID: ${{ steps.GetSecretAction.outputs.tenantid }}
+        ARM_CLIENT_ID: ${{ steps.myGetSecretAction.outputs.DevOps-PipelineSP-ID }}
+        ARM_CLIENT_SECRET: ${{ steps.myGetSecretAction.outputs.DevOps-PipelineSP-Secret }}
+        ARM_SUBSCRIPTION_ID: ${{ steps.myGetSecretAction.outputs.SubscriptionID }}
+        ARM_TENANT_ID: ${{ steps.myGetSecretAction.outputs.tenantid }}
 
     - name: Terraform Format
       id: fmt
       run: terraform fmt
       env:
-        ARM_CLIENT_ID: ${{ steps.GetSecretAction.outputs.DevOps-PipelineSP-ID }}
-        ARM_CLIENT_SECRET: ${{ steps.GetSecretAction.outputs.DevOps-PipelineSP-Secret }}
-        ARM_SUBSCRIPTION_ID: ${{ steps.GetSecretAction.outputs.SubscriptionID }}
-        ARM_TENANT_ID: ${{ steps.GetSecretAction.outputs.tenantid }}
+        ARM_CLIENT_ID: ${{ steps.myGetSecretAction.outputs.DevOps-PipelineSP-ID }}
+        ARM_CLIENT_SECRET: ${{ steps.myGetSecretAction.outputs.DevOps-PipelineSP-Secret }}
+        ARM_SUBSCRIPTION_ID: ${{ steps.myGetSecretAction.outputs.SubscriptionID }}
+        ARM_TENANT_ID: ${{ steps.myGetSecretAction.outputs.tenantid }}
 
 
     - name: Terraform Plan
@@ -62,7 +62,7 @@ jobs:
       run: terraform plan -no-color
       continue-on-error: true
       env:
-        ARM_CLIENT_ID: ${{ steps.GetSecretAction.outputs.DevOps-PipelineSP-ID }}
-        ARM_CLIENT_SECRET: ${{ steps.GetSecretAction.outputs.DevOps-PipelineSP-Secret }}
-        ARM_SUBSCRIPTION_ID: ${{ steps.GetSecretAction.outputs.SubscriptionID }}
-        ARM_TENANT_ID: ${{ steps.GetSecretAction.outputs.tenantid }}
+        ARM_CLIENT_ID: ${{ steps.myGetSecretAction.outputs.DevOps-PipelineSP-ID }}
+        ARM_CLIENT_SECRET: ${{ steps.myGetSecretAction.outputs.DevOps-PipelineSP-Secret }}
+        ARM_SUBSCRIPTION_ID: ${{ steps.myGetSecretAction.outputs.SubscriptionID }}
+        ARM_TENANT_ID: ${{ steps.myGetSecretAction.outputs.tenantid }}
