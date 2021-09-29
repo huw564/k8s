@@ -18,7 +18,7 @@ jobs:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
     - uses: Azure/get-keyvault-secrets@v1
       with: 
-        keyvault: "devopsakv001"
+        keyvault: ${{ secrets.devakv }}
         secrets: 'terraformrg, SubscriptionID, DevOps-PipelineSP-ID, DevOps-PipelineSP-Secret, tenantid, terraformstorageaccount, tf-storage-key, tfplancontainer, tfstatecontainer'
       id: myGetSecretAction
       
