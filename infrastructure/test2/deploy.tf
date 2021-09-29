@@ -10,7 +10,7 @@ terraform {
  backend "azurerm" {
   storage_account_name = "#{terraformstorageaccount}#"
   container_name       = "#{tfstatecontainer}#"
-  key                  = "test-rg.tfstate"
+  key                  = "test2-rg.tfstate"
   access_key  = "#{tf-storage-key}#"
  }
 required_providers {
