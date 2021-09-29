@@ -8,10 +8,10 @@ provider "azurerm" {
 }
 terraform {
  backend "azurerm" {
-  storage_account_name = "${{ steps.myGetSecretAction.outputs.terraformstorageaccount }}"
-  container_name       = "${{ steps.myGetSecretAction.outputs.tfstatecontainer }}"
+  storage_account_name = "#{terraformstorageaccount}#"
+  container_name       = "#{tfstatecontainer}#"
   key                  = "test-rg.tfstate"
-  access_key  = "${{ steps.myGetSecretAction.outputs.tf-storage-key }}"
+  access_key  = "#{tf-storage-key}#"
  }
 required_providers {
   azurerm = {
