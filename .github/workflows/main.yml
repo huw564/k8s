@@ -75,7 +75,7 @@ jobs:
         
     - name: Terraform Show
       id: show
-      run: terraform show"${{ secrets.tfplanname }}.plan-`$(env.GITHUB_JOB)" | Out-File ./planfile.txt
+      run: terraform show "${{ secrets.tfplanname }}.plan-`$(env.GITHUB_JOB)" | Out-File ./planfile.txt
       continue-on-error: false
       env:
         ARM_CLIENT_ID: ${{ steps.myGetSecretAction.outputs.DevOps-PipelineSP-ID }}
