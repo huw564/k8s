@@ -92,9 +92,10 @@ jobs:
       with:
         azcliversion: 2.0.72
         inlineScript: |
-            echo "$working_directory" + "${{ secrets.tfplanname }}" + ".plan-" + $GITHUB_RUN_ID
+            $file = "$working_directory" + "${{ secrets.tfplanname }}" + ".plan-" + $GITHUB_RUN_ID
+            $file
             #echo "$working_directory${{ secrets.tfplanname }}.plan-$GITHUB_RUN_ID"
-            az storage blob upload --file "$working_directory${{ secrets.tfplanname }}.plan-$GITHUB_RUN_ID" --account-name "${{ steps.myGetSecretAction.outputs.terraformstorageaccount }}" --account-key "${{ steps.myGetSecretAction.outputs.tf-storage-key }}" -c "${{ steps.myGetSecretAction.outputs.tfplancontainer }}" -n "${{ secrets.tfplanname }}.plan-$GITHUB_RUN_ID" 
+            az storage blob upload --file $file --account-name "${{ steps.myGetSecretAction.outputs.terraformstorageaccount }}" --account-key "${{ steps.myGetSecretAction.outputs.tf-storage-key }}" -c "${{ steps.myGetSecretAction.outputs.tfplancontainer }}" -n $file 
 
           
     - name: Terraform Outputs
