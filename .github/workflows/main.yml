@@ -90,15 +90,15 @@ jobs:
         inlineScript: |
           get-childitem -recurse
           ##Set The Subscription Context
-          #Set-AzContext -SubscriptionId "${{ steps.myGetSecretAction.outputs.SubscriptionID }}"
+          Set-AzContext -SubscriptionId "${{ steps.myGetSecretAction.outputs.SubscriptionID }}"
 
           ##Get the storage account Key
-          #$storageAccountKey = (Get-AzStorageAccountKey -ResourceGroupName "${{ steps.myGetSecretAction.outputs.terraformrg }}" -Name "${{ steps.myGetSecretAction.outputs.terraformstorageaccount }}").Value[0]
+          $storageAccountKey = (Get-AzStorageAccountKey -ResourceGroupName "${{ steps.myGetSecretAction.outputs.terraformrg }}" -Name "${{ steps.myGetSecretAction.outputs.terraformstorageaccount }}").Value[0]
 
           ##Create the context
-          #$storageacct = New-AzStorageContext -StorageAccountName "${{ steps.myGetSecretAction.outputs.terraformstorageaccount }}" -StorageAccountKey $storageAccountKey
+          $storageacct = New-AzStorageContext -StorageAccountName "${{ steps.myGetSecretAction.outputs.terraformstorageaccount }}" -StorageAccountKey $storageAccountKey
 
-          #Set-AzStorageBlobContent -File "${{ secrets.tfplanname }}.plan-`${{ env.GITHUB_JOB }}" -Container "${{ steps.myGetSecretAction.outputs.tfplancontainer }}" -Context $storageacct -Force
+          Set-AzStorageBlobContent -File "${{ secrets.tfplanname }}.plan-`${{ env.GITHUB_JOB }}" -Container "${{ steps.myGetSecretAction.outputs.tfplancontainer }}" -Context $storageacct -Force
 
         azPSVersion: "latest"
 
