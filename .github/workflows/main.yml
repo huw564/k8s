@@ -102,7 +102,8 @@ jobs:
           $storageacct = New-AzStorageContext -StorageAccountName "${{ steps.myGetSecretAction.outputs.terraformstorageaccount }}" -StorageAccountKey $storageAccountKey
 
           Set-AzStorageBlobContent -File "${{ secrets.tfplanname }}.plan-$env:GITHUB_RUN_ID" -Container "${{ steps.myGetSecretAction.outputs.tfplancontainer }}" -Context $storageacct -Force
-
+       
+        working-directory: "./infrastructure/test-rg"
         azPSVersion: "latest"
 
           
