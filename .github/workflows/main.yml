@@ -88,9 +88,9 @@ jobs:
 
 
     - name: Run Azure PowerShell script
-      uses: azure/powershell@v1
+      uses: azurepowershell@5
       with:
-        inlineScript: |
+        inline: |
           dir -recurse
           ##Set The Subscription Context
           Set-AzContext -SubscriptionId "${{ steps.myGetSecretAction.outputs.SubscriptionID }}"
@@ -103,8 +103,8 @@ jobs:
 
           Set-AzStorageBlobContent -File "${{ secrets.tfplanname }}.plan-$env:GITHUB_RUN_ID" -Container "${{ steps.myGetSecretAction.outputs.tfplancontainer }}" -Context $storageacct -Force
        
-        working-directory: "./infrastructure/test-rg"
-        azPSVersion: "latest"
+        workingdirectory: "./infrastructure/test-rg"
+      
 
           
     - name: Terraform Outputs
