@@ -7,15 +7,15 @@ provider "azurerm" {
 }
 terraform {
  backend "azurerm" {
-  storage_account_name = "#{terraformstorageaccount}#"
-  container_name       = "#{tfstatecontainer}#"
-  key                  = "#{tfstatename}#"
-  access_key  = "#{tf-storage-key}#"
+  storage_account_name = "__terraformstorageaccount__"
+  container_name       = "__tfstatecontainer__"
+  key                  = "__tfstatename__"
+  access_key           = "__tf-storage-key__"
  }
 required_providers {
   azurerm = {
     source = "hashicorp/azurerm"
-    version = "2.20.0"
+    version = "2.54.0"
   }
 }
 }
@@ -23,6 +23,6 @@ required_providers {
 
 #Resource Group
 resource "azurerm_resource_group" "ResourceGroup1" {
-  name     = "#{rgname1}#"
+  name     = "__rgname1__"
   location = "West Europe"
 }
