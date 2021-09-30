@@ -93,8 +93,12 @@ jobs:
         azcliversion: 2.0.72
         inlineScript: |
             ls -lahR
+            echo "github workspace.."
             echo "$GITHUB_WORKSPACE"
+            echo "pwd.."
             pwd
+            echo "working directory.."
+            echo $working_directory
             az storage blob upload --file "$GITHUB_WORKSPACE${{ secrets.tfplanname }}.plan-$GITHUB_RUN_ID"  --account-name "${{ steps.myGetSecretAction.outputs.terraformstorageaccount }}" --account-key "${{ steps.myGetSecretAction.outputs.tf-storage-key }}" -c "${{ steps.myGetSecretAction.outputs.tfplancontainer }}" -n "${{ secrets.tfplanname }}.plan-$GITHUB_RUN_ID"  
 
           
