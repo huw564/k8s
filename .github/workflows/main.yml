@@ -54,18 +54,7 @@ jobs:
         tfstatename: ${{ secrets.tfstatename }}
         rgname1: ${{ secrets.rgname1 }}
         
-    - name: Show env vars
-      uses: azure/powershell@v1
-      with:
-        inlineScript: |
-          dir env:
-          #echo "RunID1: ${GITHUB_RUN_ID}"
-          echo "RUNID2: ${{ env.GITHUB_RUN_ID }}"
-          echo "RunID3: `${GITHUB_RUN_ID}"
-          echo "RunID4: `${{ GITHUB_RUN_ID }}"          
-          echo "RunID5: ${{ GITHUB_RUN_ID }}"
 
-        azPSVersion: "latest"
         
     - uses: hashicorp/setup-terraform@v1
       with: 
