@@ -88,24 +88,12 @@ jobs:
         ARM_SUBSCRIPTION_ID: ${{ steps.myGetSecretAction.outputs.SubscriptionID }}
         ARM_TENANT_ID: ${{ steps.myGetSecretAction.outputs.tenantid }}
 
-
-    - name: Run Azure PowerShell script
-      uses: azure/powershell@v1
+    - name: Upload to blob storage
+      uses: azure/CLI@v1
       with:
+        azcliversion: 2.0.72
         inlineScript: |
-          dir env:
-          ##Set The Subscription Context
-          Set-AzContext -SubscriptionId "${{ steps.myGetSecretAction.outputs.SubscriptionID }}"
-
-          ##Get the storage account Key
-          $storageAccountKey = (Get-AzStorageAccountKey -ResourceGroupName "${{ steps.myGetSecretAction.outputs.terraformrg }}" -Name "${{ steps.myGetSecretAction.outputs.terraformstorageaccount }}").Value[0]
-
-          ##Create the context
-          $storageacct = New-AzStorageContext -StorageAccountName "${{ steps.myGetSecretAction.outputs.terraformstorageaccount }}" -StorageAccountKey $storageAccountKey
-
-          Set-AzStorageBlobContent -File "$env:working-directory${{ secrets.tfplanname }}.plan-$env:GITHUB_RUN_ID" -Container "${{ steps.myGetSecretAction.outputs.tfplancontainer }}" -Context $storageacct -Force
-        azPSVersion: "latest"
-      
+            az storage blob upload -f "${{ secrets.tfplanname }}.plan-$env:GITHUB_RUN_ID" --account-name "${{ steps.myGetSecretAction.outputs.terraformstorageaccount }}" --account-key "${{ steps.myGetSecretAction.outputs.tf-storage-key }}" -c "${{ steps.myGetSecretAction.outputs.tfplancontainer }}" -n "${{ secrets.tfplanname }}.plan-$env:GITHUB_RUN_ID" 
 
           
     - name: Terraform Outputs
