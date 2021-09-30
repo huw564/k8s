@@ -65,7 +65,7 @@ jobs:
 
     - name: Terraform Plan
       id: plan
-      run: terraform plan -no-color -out="${{ secrets.tfplanname }}.plan-`${GITHUB_JOB}"
+      run: terraform plan -no-color -out="${{ secrets.tfplanname }}.plan-${GITHUB_JOB}"
       continue-on-error: false
       env:
         ARM_CLIENT_ID: ${{ steps.myGetSecretAction.outputs.DevOps-PipelineSP-ID }}
@@ -75,7 +75,7 @@ jobs:
         
     - name: Terraform Show
       id: show
-      run: terraform show "${{ secrets.tfplanname }}.plan-`${GITHUB_JOB}" | Out-File ./planfile.txt
+      run: terraform show "${{ secrets.tfplanname }}.plan-${GITHUB_JOB}" | Out-File ./planfile.txt
       continue-on-error: false
       env:
         ARM_CLIENT_ID: ${{ steps.myGetSecretAction.outputs.DevOps-PipelineSP-ID }}
@@ -98,7 +98,7 @@ jobs:
           ##Create the context
           $storageacct = New-AzStorageContext -StorageAccountName "${{ steps.myGetSecretAction.outputs.terraformstorageaccount }}" -StorageAccountKey $storageAccountKey
 
-          Set-AzStorageBlobContent -File "${{ secrets.tfplanname }}.plan-`${GITHUB_JOB}" -Container "${{ steps.myGetSecretAction.outputs.tfplancontainer }}" -Context $storageacct -Force
+          Set-AzStorageBlobContent -File "${{ secrets.tfplanname }}.plan-${GITHUB_JOB}" -Container "${{ steps.myGetSecretAction.outputs.tfplancontainer }}" -Context $storageacct -Force
 
         azPSVersion: "latest"
 
