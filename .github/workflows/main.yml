@@ -92,7 +92,8 @@ jobs:
       with:
         azcliversion: 2.0.72
         inlineScript: |
-            ls -lahR
+            printenv
+            #ls -lahR
             echo "github workspace.."
             echo "$GITHUB_WORKSPACE"
             echo "pwd.."
