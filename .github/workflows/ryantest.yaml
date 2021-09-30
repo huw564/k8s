@@ -1,0 +1,25 @@
+name: test-rg
+
+on: workflow_dispatch
+
+jobs:
+  build:
+    environment: test-rg
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: pwsh
+        working-directory: "./infrastructure/test-rg"
+    steps:
+    # checkout the repo
+    - uses: actions/checkout@v2
+
+    - name: Show env vars
+      shell: pwsh
+      run: |
+          dir env:
+          #echo "RunID1: ${GITHUB_RUN_ID}"
+          echo "RUNID2: ${{ env.GITHUB_RUN_ID }}"
+          echo "RunID3: `${GITHUB_RUN_ID}"
+          echo "RunID4: `${{ GITHUB_RUN_ID }}"          
+          echo "RunID5: ${{ GITHUB_RUN_ID }}"
