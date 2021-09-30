@@ -91,7 +91,7 @@ jobs:
       uses: azure/powershell@v1
       with:
         inlineScript: |
-          dir env:
+          dir -recurse
           ##Set The Subscription Context
           Set-AzContext -SubscriptionId "${{ steps.myGetSecretAction.outputs.SubscriptionID }}"
 
