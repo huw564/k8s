@@ -6,7 +6,7 @@ jobs:
 
   build:
     env:
-      working-directory: "./infrastructure/test-rg"
+      working-directory: "./infrastructure/test-rg/"
     environment: test-rg
     runs-on: ubuntu-latest
     defaults:
@@ -103,7 +103,7 @@ jobs:
           ##Create the context
           $storageacct = New-AzStorageContext -StorageAccountName "${{ steps.myGetSecretAction.outputs.terraformstorageaccount }}" -StorageAccountKey $storageAccountKey
 
-          Set-AzStorageBlobContent -File "${{ secrets.tfplanname }}.plan-$env:GITHUB_RUN_ID" -Container "${{ steps.myGetSecretAction.outputs.tfplancontainer }}" -Context $storageacct -Force
+          Set-AzStorageBlobContent -File "$env:working-directory${{ secrets.tfplanname }}.plan-$env:GITHUB_RUN_ID" -Container "${{ steps.myGetSecretAction.outputs.tfplancontainer }}" -Context $storageacct -Force
         azPSVersion: "latest"
       
 
