@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        shell: bash
+        shell: pwsh
         working-directory: "./infrastructure/test-rg"
     steps:
     # checkout the repo
@@ -24,6 +24,8 @@ jobs:
       
     - uses: cschleiden/replace-tokens@v1
       with:
+        tokenPrefix: '__'
+        tokenSuffix: '__'
         files: '["**/*.tf"]'
       env:
         terraformstorageaccount: ${{ steps.myGetSecretAction.outputs.terraformstorageaccount }}
