@@ -6,13 +6,13 @@ jobs:
 
   build:
     env:
-      working-directory: "./infrastructure/test-rg/"
+      working_directory: "./infrastructure/test-rg/"
     environment: test-rg
     runs-on: ubuntu-latest
     defaults:
       run:
         shell: pwsh
-        working-directory: ${{  env.working-directory  }}
+        working-directory: ${{  env.working_directory  }}
     steps:
     # checkout the repo
     - uses: actions/checkout@v2
@@ -93,7 +93,7 @@ jobs:
         azcliversion: 2.0.72
         inlineScript: |
             echo "$working-directory${{ secrets.tfplanname }}.plan-$GITHUB_RUN_ID"
-            az storage blob upload --file "$working-directory${{ secrets.tfplanname }}.plan-$GITHUB_RUN_ID" --account-name "${{ steps.myGetSecretAction.outputs.terraformstorageaccount }}" --account-key "${{ steps.myGetSecretAction.outputs.tf-storage-key }}" -c "${{ steps.myGetSecretAction.outputs.tfplancontainer }}" -n "${{ secrets.tfplanname }}.plan-$GITHUB_RUN_ID" 
+            az storage blob upload --file "$working_directory${{ secrets.tfplanname }}.plan-$GITHUB_RUN_ID" --account-name "${{ steps.myGetSecretAction.outputs.terraformstorageaccount }}" --account-key "${{ steps.myGetSecretAction.outputs.tf-storage-key }}" -c "${{ steps.myGetSecretAction.outputs.tfplancontainer }}" -n "${{ secrets.tfplanname }}.plan-$GITHUB_RUN_ID" 
 
           
     - name: Terraform Outputs
