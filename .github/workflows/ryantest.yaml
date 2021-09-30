@@ -18,4 +18,4 @@ jobs:
       shell: pwsh
       run: |
           dir env:
-          echo "RunID1: $env:GITHUB_RUN_ID"
+          echo "RunID1-$env:GITHUB_RUN_ID"
