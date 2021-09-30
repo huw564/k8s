@@ -40,7 +40,7 @@ jobs:
       with:
         inlineScript: |
           dir env:
-          echo "RunID1: ${GITHUB_RUN_ID}"
+          #echo "RunID1: ${GITHUB_RUN_ID}"
           echo "RUNID2: ${{ env.GITHUB_RUN_ID }}"
           echo "RunID3: `${GITHUB_RUN_ID}"
           echo "RunID4: `${{ GITHUB_RUN_ID }}"          
