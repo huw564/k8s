@@ -82,9 +82,11 @@ jobs:
         ARM_SUBSCRIPTION_ID: ${{ steps.myGetSecretAction.outputs.SubscriptionID }}
         ARM_TENANT_ID: ${{ steps.myGetSecretAction.outputs.tenantid }}
 
-    - name: Upload plan file
-      shell: pwsh
-      run: |
+
+    - name: Run Azure PowerShell script
+      uses: azure/powershell@v1
+      with:
+        inlineScript: |
           ##Set The Subscription Context
           Set-AzContext -SubscriptionId "${{ steps.myGetSecretAction.outputs.SubscriptionID }}"
 
@@ -95,6 +97,8 @@ jobs:
           $storageacct = New-AzStorageContext -StorageAccountName "${{ steps.myGetSecretAction.outputs.terraformstorageaccount }}" -StorageAccountKey $storageAccountKey
 
           Set-AzStorageBlobContent -File "${{ secrets.tfplanname }}.plan-$(env.GITHUB_JOB)" -Container "${{ steps.myGetSecretAction.outputs.tfplancontainer }}" -Context $storageacct -Force
+
+        azPSVersion: "latest"
 
           
     - name: Terraform Outputs
