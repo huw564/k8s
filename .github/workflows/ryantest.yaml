@@ -1,4 +1,4 @@
-name: test-rg
+name: ryantest
 
 on: workflow_dispatch
 
