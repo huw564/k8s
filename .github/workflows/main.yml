@@ -4,24 +4,6 @@ on: workflow_dispatch
 
 jobs:
 
-  sample-job:
-      runs-on: ubuntu-latest
-      steps:
-          - name: echo-default-env-variables
-            run: |
-                echo "Home: ${HOME}"
-                echo "GITHUB_WORKFLOW: ${GITHUB_WORKFLOW}"
-                echo "GITHUB_ACTIONS: ${GITHUB_ACTIONS}"
-                echo "GITHUB_ACTOR: ${GITHUB_ACTOR}"
-                echo "GITHUB_REPOSITORY: ${GITHUB_REPOSITORY}"
-                echo "GITHUB_EVENT_NAME: ${GITHUB_EVENT_NAME}"
-                echo "GITHUB_WORKSPACE: ${GITHUB_WORKSPACE}"
-                echo "GITHUB_SHA: ${GITHUB_SHA}"
-                echo "GITHUB_REF: ${GITHUB_REF}"
-                echo "GITHUB_RUN_ID: ${GITHUB_RUN_ID}"
-
-
-
   build:
     environment: test-rg
     runs-on: ubuntu-latest
@@ -86,7 +68,7 @@ jobs:
 
     - name: Terraform Plan
       id: plan
-      run: terraform plan -no-color -out="${{ secrets.tfplanname }}.plan-${GITHUB_RUN_ID}"
+      run: terraform plan -no-color -out="${{ secrets.tfplanname }}.plan-$env:GITHUB_RUN_ID"
       continue-on-error: false
       env:
         ARM_CLIENT_ID: ${{ steps.myGetSecretAction.outputs.DevOps-PipelineSP-ID }}
@@ -96,7 +78,7 @@ jobs:
         
     - name: Terraform Show
       id: show
-      run: terraform show "${{ secrets.tfplanname }}.plan-${GITHUB_RUN_ID}" | Out-File ./planfile.txt
+      run: terraform show "${{ secrets.tfplanname }}.plan-$env:GITHUB_RUN_ID" | Out-File ./planfile.txt
       continue-on-error: false
       env:
         ARM_CLIENT_ID: ${{ steps.myGetSecretAction.outputs.DevOps-PipelineSP-ID }}
@@ -119,7 +101,7 @@ jobs:
           ##Create the context
           $storageacct = New-AzStorageContext -StorageAccountName "${{ steps.myGetSecretAction.outputs.terraformstorageaccount }}" -StorageAccountKey $storageAccountKey
 
-          Set-AzStorageBlobContent -File "${{ secrets.tfplanname }}.plan-`${GITHUB_RUN_ID}" -Container "${{ steps.myGetSecretAction.outputs.tfplancontainer }}" -Context $storageacct -Force
+          Set-AzStorageBlobContent -File "${{ secrets.tfplanname }}.plan-$env:GITHUB_RUN_ID" -Container "${{ steps.myGetSecretAction.outputs.tfplancontainer }}" -Context $storageacct -Force
 
         azPSVersion: "latest"
 
