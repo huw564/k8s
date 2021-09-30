@@ -77,7 +77,7 @@ jobs:
           
     - name: Terraform Outputs
       env:
-        PLAN: "terraform\n${{ steps.plan.outputs.stdout }}"
+        PLAN: "${{ steps.plan.outputs.stdout }}"
       shell: pwsh
       run: |
           Write-Host "Terraform Format and Style ${{ steps.fmt.outcome }}"
