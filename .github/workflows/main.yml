@@ -16,6 +16,7 @@ jobs:
     - uses: Azure/login@v1
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
+        enable-AzPSSession: true
     - uses: Azure/get-keyvault-secrets@v1
       with: 
         keyvault: ${{ secrets.devakv }}
@@ -74,8 +75,8 @@ jobs:
         
     - name: Terraform Show
       id: show
-      run: terraform show"${{ secrets.tfplanname }}.plan-$(env.GITHUB_JOB)" | Out-File ./planfile.txt
-      continue-on-error: true
+      run: terraform show"${{ secrets.tfplanname }}.plan-`$(env.GITHUB_JOB)" | Out-File ./planfile.txt
+      continue-on-error: false
       env:
         ARM_CLIENT_ID: ${{ steps.myGetSecretAction.outputs.DevOps-PipelineSP-ID }}
         ARM_CLIENT_SECRET: ${{ steps.myGetSecretAction.outputs.DevOps-PipelineSP-Secret }}
