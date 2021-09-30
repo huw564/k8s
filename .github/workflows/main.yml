@@ -82,7 +82,7 @@ jobs:
           Write-Host "Terraform Initialization ${{ steps.init.outcome }}"
           Write-Host "Terraform Plan ${{ steps.plan.outcome }}"
           write-host "Show Plan"
-          ${process.env.PLAN}
+          write-host ${process.env.PLAN}
 
     - name: Terraform Plan Status
       if: steps.plan.outcome == 'failure'
