@@ -110,6 +110,7 @@ jobs:
           "${{ env.PLAN }}"
         
     - name: Terraform Change and Destroy check
+      id: tfcheck
       shell: pwsh
       env: 
         PLAN: "${{ steps.plan.outputs.stdout }}"
@@ -151,7 +152,7 @@ jobs:
 
 
     - name: Terraform Plan Status
-      if: steps.plan.outcome == 'failure'
+      if: steps.tfcheck.outcome == 'failure'
       run: exit 1
        
     - name: Download Plan file
