@@ -11,6 +11,9 @@ jobs:
   testing:
     runs-on: ubuntu-latest
     environment: test-rg
+    defaults:
+      run:
+        working-directory: ${{ env.working_directory }}
     
     steps:
       - uses: actions/checkout@v2
