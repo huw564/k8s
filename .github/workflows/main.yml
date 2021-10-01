@@ -114,7 +114,15 @@ jobs:
       if: steps.plan.outcome == 'failure'
       run: exit 1
        
-      
+    - name: Download Plan file
+      uses: azure/CLI@v1
+      env: 
+        planname: ${{ secrets.tfplanname }}
+        workingdirectory: ${{  env.working_directory  }}
+      with:
+        azcliversion: 2.0.72
+        inlineScript: |
+          #blah          
       
     - name: Terraform Apply
       run: terraform apply -auto-approve
