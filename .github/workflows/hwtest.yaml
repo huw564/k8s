@@ -10,4 +10,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: "List working directory"
-        run: echo env:working_directory
+        run: echo ${{ env:working_directory }}
