@@ -80,5 +80,5 @@ jobs:
           ARM_TENANT_ID: ${{ steps.myGetSecretAction.outputs.tenantid }}
 
       - name: dir
-          run |
+        run: |
           dir -recurse
