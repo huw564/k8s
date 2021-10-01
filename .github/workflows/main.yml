@@ -91,10 +91,12 @@ jobs:
       uses: azure/CLI@v1
       env: 
         planname: ${{ secrets.tfplanname }}
+        workingdirectory: ${{  env.working_directory  }}
       with:
         azcliversion: 2.0.72
         inlineScript: |
             echo ${{ env.planname }}
+            echo "$GITHUB_WORKSPACE${{ env.working_directory }}${{ env.tfplanname }}.plan-$GITHUB_RUN_ID"
             #ls -lahR
             #echo "github workspace.."
             #echo "$GITHUB_WORKSPACE"
