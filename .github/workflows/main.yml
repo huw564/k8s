@@ -114,7 +114,7 @@ jobs:
       env: 
         PLAN: "${{ steps.plan.outputs.stdout }}"
       run: |
-          ${{ env.PLAN }} | Out-file ./planfile.txt
+          echo "${{ env.PLAN }}" | Out-file ./planfile.txt
           [int]$addcount = ((Get-Content ./planfile.txt | Select-string -Pattern "to destroy." | Out-String).Split(',') | Select-String -Pattern "add" | Out-String).Split(" ")[1]
           [int]$changecount = ((Get-Content ./planfile.txt | Select-string -Pattern "to destroy." | Out-String).Split(',') | Select-String -Pattern "change" | Out-String).Split(" ")[1]
           [int]$destroycount = ((Get-Content ./planfile.txt | Select-string -Pattern "to destroy." | Out-String).Split(',') | Select-String -Pattern "destroy" | Out-String).Split(" ")[1]    
