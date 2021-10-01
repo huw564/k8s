@@ -89,11 +89,12 @@ jobs:
 
     - name: Upload to blob storage
       uses: azure/CLI@v1
+      env: 
+        planname: ${{ secrets.tfplanname }}
       with:
         azcliversion: 2.0.72
-        planname: ${{ secrets.tfplanname }}
         inlineScript: |
-            echo ${planname}
+            echo ${{ env.planname }}
             #ls -lahR
             #echo "github workspace.."
             #echo "$GITHUB_WORKSPACE"
