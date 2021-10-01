@@ -4,6 +4,7 @@ on: workflow_dispatch
 
 env:
   working_directory: "./infrastructure/test-rg/"
+  tfplanname:  ${{ secrets.TFPLANNAME }} 
 
 jobs: 
   
@@ -36,6 +37,7 @@ jobs:
           tfstatename: ${{ secrets.tfstatename }}
           rgname1: ${{ secrets.rgname1 }}
           
+       
          
       - uses: hashicorp/setup-terraform@v1
         with: 
