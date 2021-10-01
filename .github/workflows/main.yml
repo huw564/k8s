@@ -167,7 +167,7 @@ jobs:
           
       
     - name: Terraform Apply
-      run: terraform apply -auto-approve ${{ env.planname }}.planforapply
+      run: terraform apply -auto-approve ${{ secrets.tfplanname }}.planforapply
       env:
         ARM_CLIENT_ID: ${{ steps.myGetSecretAction.outputs.DevOps-PipelineSP-ID }}
         ARM_CLIENT_SECRET: ${{ steps.myGetSecretAction.outputs.DevOps-PipelineSP-Secret }}
