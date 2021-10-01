@@ -107,7 +107,7 @@ jobs:
           Write-Host "Terraform Format and Style ${{ steps.fmt.outcome }}"
           Write-Host "Terraform Initialization ${{ steps.init.outcome }}"
           Write-Host "Terraform Plan ${{ steps.plan.outcome }}"
-          "${{ env.PLAN }}"
+          echo "${{ env.PLAN }}"
         
     - name: Terraform Change and Destroy check
       id: tfcheck
