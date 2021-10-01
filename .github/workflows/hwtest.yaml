@@ -72,7 +72,7 @@ jobs:
 
       - name: Terraform Plan
         id: plan
-        run: terraform plan -no-color -out="${{ env.tfplanname }}.plan-$GITHUB_RUN_ID"
+        run: terraform plan -no-color -out="${{ env.planname }}.plan-$GITHUB_RUN_ID"
         continue-on-error: false
         env:
           ARM_CLIENT_ID: ${{ steps.myGetSecretAction.outputs.DevOps-PipelineSP-ID }}
