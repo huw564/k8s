@@ -21,4 +21,4 @@ jobs:
           tfplanname:  ${{ secrets.TFPLANNAME }}
         run: |
           echo "$rg"  
-          echo "tfplanname"
+          echo "$tfplanname"
