@@ -12,16 +12,13 @@ jobs:
   testing:
     runs-on: ubuntu-latest
     environment: test-rg
-    env:
-      ARM_CLIENT_ID: ${{ steps.myGetSecretAction.outputs.DevOps-PipelineSP-ID }}
-      ARM_CLIENT_SECRET: ${{ steps.myGetSecretAction.outputs.DevOps-PipelineSP-Secret }}
-      ARM_SUBSCRIPTION_ID: ${{ steps.myGetSecretAction.outputs.SubscriptionID }}
-      ARM_TENANT_ID: ${{ steps.myGetSecretAction.outputs.tenantid }}
+
     defaults:
       run:
         working-directory: ${{ env.working_directory }}      
     
     steps:
+    
       - uses: actions/checkout@v2
       
       - uses: Azure/login@v1
@@ -33,7 +30,12 @@ jobs:
           keyvault: ${{ secrets.devakv }}
           secrets: 'terraformrg, SubscriptionID, DevOps-PipelineSP-ID, DevOps-PipelineSP-Secret, tenantid, terraformstorageaccount, tf-storage-key, tfplancontainer, tfstatecontainer'
         id: myGetSecretAction
-        
+        env:
+          ARM_CLIENT_ID: ${{ steps.myGetSecretAction.outputs.DevOps-PipelineSP-ID }}
+          ARM_CLIENT_SECRET: ${{ steps.myGetSecretAction.outputs.DevOps-PipelineSP-Secret }}
+          ARM_SUBSCRIPTION_ID: ${{ steps.myGetSecretAction.outputs.SubscriptionID }}
+          ARM_TENANT_ID: ${{ steps.myGetSecretAction.outputs.tenantid }}        
+          
       - uses: cschleiden/replace-tokens@v1
         with:
           tokenPrefix: '__'
