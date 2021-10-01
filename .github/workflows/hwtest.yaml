@@ -12,17 +12,73 @@ jobs:
     environment: test-rg
     
     steps:
-      - name: "List working directory"
-        run: echo ${{ env.working_directory }}
+      - uses: actions/checkout@v2
+      
+      - uses: Azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+          
+      - uses: Azure/get-keyvault-secrets@v1
+        with: 
+          keyvault: ${{ secrets.devakv }}
+          secrets: 'terraformrg, SubscriptionID, DevOps-PipelineSP-ID, DevOps-PipelineSP-Secret, tenantid, terraformstorageaccount, tf-storage-key, tfplancontainer, tfstatecontainer'
+        id: myGetSecretAction
         
+      - uses: cschleiden/replace-tokens@v1
+        with:
+          tokenPrefix: '__'
+          tokenSuffix: '__'
+          files: '["**/*.tf"]'
+        env:
+          terraformstorageaccount: ${{ steps.myGetSecretAction.outputs.terraformstorageaccount }}
+          tfstatecontainer: ${{ steps.myGetSecretAction.outputs.tfstatecontainer }}
+          tf-storage-key: ${{ steps.myGetSecretAction.outputs.tf-storage-key }}
+          tfstatename: ${{ secrets.tfstatename }}
+          rgname1: ${{ secrets.rgname1 }}
+          
       - name: "Retreive secrets"
         env:
           rg: ${{ secrets.RGNAME1 }}
           tfplanname:  ${{ secrets.TFPLANNAME }}
-       
-       
-        run: |
-          echo "$rg"  
-          echo "$tfplanname"
-          echo "$GITHUB_RUN_ID"
-          echo ${{ env.working_directory }}${{ env.tfplanname }}.plan-$GITHUB_RUN_ID
+          
+      - uses: hashicorp/setup-terraform@v1
+        with: 
+          terraform_version: 0.15.3
+        env:
+          ARM_CLIENT_ID: ${{ steps.myGetSecretAction.outputs.DevOps-PipelineSP-ID }}
+          ARM_CLIENT_SECRET: ${{ steps.myGetSecretAction.outputs.DevOps-PipelineSP-Secret }}
+          ARM_SUBSCRIPTION_ID: ${{ steps.myGetSecretAction.outputs.SubscriptionID }}
+          ARM_TENANT_ID: ${{ steps.myGetSecretAction.outputs.tenantid }}
+
+      - name: Terraform Init
+        id: init
+        run: terraform init
+        env:
+          ARM_CLIENT_ID: ${{ steps.myGetSecretAction.outputs.DevOps-PipelineSP-ID }}
+          ARM_CLIENT_SECRET: ${{ steps.myGetSecretAction.outputs.DevOps-PipelineSP-Secret }}
+          ARM_SUBSCRIPTION_ID: ${{ steps.myGetSecretAction.outputs.SubscriptionID }}
+          ARM_TENANT_ID: ${{ steps.myGetSecretAction.outputs.tenantid }}
+
+      - name: Terraform Format
+        id: fmt
+        run: terraform fmt
+        env:
+          ARM_CLIENT_ID: ${{ steps.myGetSecretAction.outputs.DevOps-PipelineSP-ID }}
+          ARM_CLIENT_SECRET: ${{ steps.myGetSecretAction.outputs.DevOps-PipelineSP-Secret }}
+          ARM_SUBSCRIPTION_ID: ${{ steps.myGetSecretAction.outputs.SubscriptionID }}
+          ARM_TENANT_ID: ${{ steps.myGetSecretAction.outputs.tenantid }}
+
+
+      - name: Terraform Plan
+        id: plan
+        run: terraform plan -no-color -out="${{ env.tfplanname }}.plan-$GITHUB_RUN_ID"
+        continue-on-error: false
+        env:
+          ARM_CLIENT_ID: ${{ steps.myGetSecretAction.outputs.DevOps-PipelineSP-ID }}
+          ARM_CLIENT_SECRET: ${{ steps.myGetSecretAction.outputs.DevOps-PipelineSP-Secret }}
+          ARM_SUBSCRIPTION_ID: ${{ steps.myGetSecretAction.outputs.SubscriptionID }}
+          ARM_TENANT_ID: ${{ steps.myGetSecretAction.outputs.tenantid }}
+
+      - name: dir
+          run |
+          dir -recurse
