@@ -4,7 +4,7 @@ on: workflow_dispatch
 
 env:
   working_directory: "./infrastructure/test-rg/"
-  tfplanname:  ${{ secrets.TFPLANNAME }} 
+  planname:  ${{ secrets.TFPLANNAME }} 
 
 jobs: 
   
@@ -80,6 +80,12 @@ jobs:
           ARM_SUBSCRIPTION_ID: ${{ steps.myGetSecretAction.outputs.SubscriptionID }}
           ARM_TENANT_ID: ${{ steps.myGetSecretAction.outputs.tenantid }}
 
-      - name: dir
-        run: |
-          dir -recurse
+      - name: Upload to blob storage
+        uses: azure/CLI@v1
+        with:
+            azcliversion: 2.0.72
+            inlineScript: |
+                echo ${{ env.planname }}
+                echo "$GITHUB_WORKSPACE/${{ env.working_directory }}${{ env.planname }}.plan-$GITHUB_RUN_ID"
+                az storage blob upload --file "$GITHUB_WORKSPACE/${{ env.working_directory }}${{ env.planname }}.plan-$GITHUB_RUN_ID"  --account-name "${{ steps.myGetSecretAction.outputs.terraformstorageaccount }}" --account-key "${{ steps.myGetSecretAction.outputs.tf-storage-key }}" -c "${{ steps.myGetSecretAction.outputs.tfplancontainer }}" -n ${{ env.planname }}.plan-$GITHUB_RUN_ID 
+
