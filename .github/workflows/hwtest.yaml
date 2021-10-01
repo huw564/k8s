@@ -5,9 +5,12 @@ on: workflow_dispatch
 env:
   working_directory: "./infrastructure/test-rg/"
 
-jobs:
+jobs: 
+  
   testing:
     runs-on: ubuntu-latest
+    environment: test-rg
+    
     steps:
       - name: "List working directory"
         run: echo ${{ env.working_directory }}
