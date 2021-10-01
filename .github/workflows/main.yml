@@ -121,14 +121,14 @@ jobs:
           Write-Host "##[section]$addcount resources are to be added"
           Write-Host "##[warning]$changecount resources are to be changed"
           Write-Host "##[error]$destroycount resources are to be destroyed"
-  
+          Write-Host "${{ secrets.tfdestroysallowed }}"
           ##Check for destroy and whether permitted
           if ($destroycount -ge 1) { 
           Write-Host "Destroy detected. Checking if allowed.."
-          if ("$(tfdestroysallowed)" -eq "true") { 
+          if ("${{ secrets.tfdestroysallowed }}" -eq "true") { 
           Write-Host "##[section]$Authorised Destroy detected"
           } else { 
-          if ("$(tfdestroysallowed)" -ne "true") { 
+          if ("${{ secrets.tfdestroysallowed }}" -ne "true") { 
           Write-Host "##[error]Destroy has been detected but not authorised.."
           throw "Destroy is NOT allowed. Please review this pipeline."
           }
@@ -138,10 +138,10 @@ jobs:
           ##Check for change and whether permitted
           if ($changecount -ge 1) { 
           Write-Host "Change detected. Checking if allowed.."
-          if ("$(tfchangesallowed)" -eq "true") { 
+          if ("${{ secrets.tfchangesallowed }}" -eq "true") { 
           write-host "Would proceed"
           } else { 
-          if ("$(tfchangesallowed)" -ne "true") { 
+          if ("${{ secrets.tfchangesallowed }}" -ne "true") { 
           Write-Host "Would not proceed.."
           throw "Change is NOT allowed. Please review this pipeline."
           }
