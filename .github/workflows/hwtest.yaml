@@ -9,7 +9,7 @@ env:
 
 jobs: 
   
-  testing:
+  plan:
     runs-on: ubuntu-latest
     environment: test-rg
 
@@ -93,4 +93,40 @@ jobs:
                 echo ${{ env.planname }}
                 echo "$GITHUB_WORKSPACE/${{ env.working_directory }}${{ env.planname }}.plan-$GITHUB_RUN_ID"
                 az storage blob upload --file "$GITHUB_WORKSPACE/${{ env.working_directory }}${{ env.planname }}.plan-$GITHUB_RUN_ID"  --account-name "${{ steps.myGetSecretAction.outputs.terraformstorageaccount }}" --account-key "${{ steps.myGetSecretAction.outputs.tf-storage-key }}" -c "${{ steps.myGetSecretAction.outputs.tfplancontainer }}" -n ${{ env.planname }}.plan-$GITHUB_RUN_ID 
+    
+    
+    
+  apply:
+    runs-on: ubuntu-latest
+    environment: test-rg
+
+    defaults:
+      run:
+        working-directory: ${{ env.working_directory }}
+    steps:
+    
+      - uses: actions/checkout@v2
+      
+      - uses: Azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+          
+      - uses: Azure/get-keyvault-secrets@v1
+        with: 
+          keyvault: ${{ secrets.devakv }}
+          secrets: 'terraformrg, SubscriptionID, DevOps-PipelineSP-ID, DevOps-PipelineSP-Secret, tenantid, terraformstorageaccount, tf-storage-key, tfplancontainer, tfstatecontainer'
+        id: myGetSecretAction
+     
+          
+      - uses: cschleiden/replace-tokens@v1
+        with:
+          tokenPrefix: '__'
+          tokenSuffix: '__'
+          files: '["**/*.tf"]'
+        env:
+          terraformstorageaccount: ${{ steps.myGetSecretAction.outputs.terraformstorageaccount }}
+          tfstatecontainer: ${{ steps.myGetSecretAction.outputs.tfstatecontainer }}
+          tf-storage-key: ${{ steps.myGetSecretAction.outputs.tf-storage-key }}
+          tfstatename: ${{ secrets.tfstatename }}
+          rgname1: ${{ secrets.rgname1 }}        
 
