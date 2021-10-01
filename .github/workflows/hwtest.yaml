@@ -11,3 +11,9 @@ jobs:
     steps:
       - name: "List working directory"
         run: echo ${{ env.working_directory }}
+        
+      - name: "Retreive secret"
+        env:
+          rg: ${{ secrets.RGNAME1 }}
+        run: |
+          echo "$rg"     
