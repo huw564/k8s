@@ -36,11 +36,7 @@ jobs:
           tfstatename: ${{ secrets.tfstatename }}
           rgname1: ${{ secrets.rgname1 }}
           
-      - name: "Retreive secrets"
-        env:
-          rg: ${{ secrets.RGNAME1 }}
-          tfplanname:  ${{ secrets.TFPLANNAME }}
-          
+         
       - uses: hashicorp/setup-terraform@v1
         with: 
           terraform_version: 0.15.3
