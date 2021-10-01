@@ -19,9 +19,9 @@ jobs:
         env:
           rg: ${{ secrets.RGNAME1 }}
           tfplanname:  ${{ secrets.TFPLANNAME }}
-          githubrunid: ${{ GITHUB_RUN_ID }}
-          
+       
+       
         run: |
           echo "$rg"  
           echo "$tfplanname"
-          echo "$githubrunid"
+          echo "$GITHUB_RUN_ID"
