@@ -4,7 +4,11 @@ on: workflow_dispatch
 
 env:
   working_directory: "./infrastructure/test-rg/"
-  planname:  ${{ secrets.TFPLANNAME }} 
+  planname:  ${{ secrets.TFPLANNAME }}
+  ARM_CLIENT_ID: ${{ steps.myGetSecretAction.outputs.DevOps-PipelineSP-ID }}
+  ARM_CLIENT_SECRET: ${{ steps.myGetSecretAction.outputs.DevOps-PipelineSP-Secret }}
+  ARM_SUBSCRIPTION_ID: ${{ steps.myGetSecretAction.outputs.SubscriptionID }}
+  ARM_TENANT_ID: ${{ steps.myGetSecretAction.outputs.tenantid }}
 
 jobs: 
   
@@ -54,11 +58,7 @@ jobs:
       - name: Terraform Init
         id: init
         run: terraform init
-        env:
-          ARM_CLIENT_ID: ${{ steps.myGetSecretAction.outputs.DevOps-PipelineSP-ID }}
-          ARM_CLIENT_SECRET: ${{ steps.myGetSecretAction.outputs.DevOps-PipelineSP-Secret }}
-          ARM_SUBSCRIPTION_ID: ${{ steps.myGetSecretAction.outputs.SubscriptionID }}
-          ARM_TENANT_ID: ${{ steps.myGetSecretAction.outputs.tenantid }}
+
 
       - name: Terraform Format
         id: fmt
