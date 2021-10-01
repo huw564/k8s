@@ -30,11 +30,7 @@ jobs:
           keyvault: ${{ secrets.devakv }}
           secrets: 'terraformrg, SubscriptionID, DevOps-PipelineSP-ID, DevOps-PipelineSP-Secret, tenantid, terraformstorageaccount, tf-storage-key, tfplancontainer, tfstatecontainer'
         id: myGetSecretAction
-        env:
-          ARM_CLIENT_ID: ${{ steps.myGetSecretAction.outputs.DevOps-PipelineSP-ID }}
-          ARM_CLIENT_SECRET: ${{ steps.myGetSecretAction.outputs.DevOps-PipelineSP-Secret }}
-          ARM_SUBSCRIPTION_ID: ${{ steps.myGetSecretAction.outputs.SubscriptionID }}
-          ARM_TENANT_ID: ${{ steps.myGetSecretAction.outputs.tenantid }}        
+     
           
       - uses: cschleiden/replace-tokens@v1
         with:
@@ -53,21 +49,41 @@ jobs:
       - uses: hashicorp/setup-terraform@v1
         with: 
           terraform_version: 0.15.3
+        env:
+          ARM_CLIENT_ID: ${{ steps.myGetSecretAction.outputs.DevOps-PipelineSP-ID }}
+          ARM_CLIENT_SECRET: ${{ steps.myGetSecretAction.outputs.DevOps-PipelineSP-Secret }}
+          ARM_SUBSCRIPTION_ID: ${{ steps.myGetSecretAction.outputs.SubscriptionID }}
+          ARM_TENANT_ID: ${{ steps.myGetSecretAction.outputs.tenantid }}     
 
       - name: Terraform Init
         id: init
         run: terraform init
+        env:
+          ARM_CLIENT_ID: ${{ steps.myGetSecretAction.outputs.DevOps-PipelineSP-ID }}
+          ARM_CLIENT_SECRET: ${{ steps.myGetSecretAction.outputs.DevOps-PipelineSP-Secret }}
+          ARM_SUBSCRIPTION_ID: ${{ steps.myGetSecretAction.outputs.SubscriptionID }}
+          ARM_TENANT_ID: ${{ steps.myGetSecretAction.outputs.tenantid }}            
 
 
       - name: Terraform Format
         id: fmt
         run: terraform fmt
+        env:
+          ARM_CLIENT_ID: ${{ steps.myGetSecretAction.outputs.DevOps-PipelineSP-ID }}
+          ARM_CLIENT_SECRET: ${{ steps.myGetSecretAction.outputs.DevOps-PipelineSP-Secret }}
+          ARM_SUBSCRIPTION_ID: ${{ steps.myGetSecretAction.outputs.SubscriptionID }}
+          ARM_TENANT_ID: ${{ steps.myGetSecretAction.outputs.tenantid }}            
 
 
       - name: Terraform Plan
         id: plan
         run: terraform plan -no-color -out="${{ env.planname }}.plan-$GITHUB_RUN_ID"
         continue-on-error: false
+        env:
+          ARM_CLIENT_ID: ${{ steps.myGetSecretAction.outputs.DevOps-PipelineSP-ID }}
+          ARM_CLIENT_SECRET: ${{ steps.myGetSecretAction.outputs.DevOps-PipelineSP-Secret }}
+          ARM_SUBSCRIPTION_ID: ${{ steps.myGetSecretAction.outputs.SubscriptionID }}
+          ARM_TENANT_ID: ${{ steps.myGetSecretAction.outputs.tenantid }}            
 
       - name: Upload to blob storage
         uses: azure/CLI@v1
