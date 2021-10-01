@@ -109,6 +109,14 @@ jobs:
           Write-Host "Terraform Plan ${{ steps.plan.outcome }}"
           "${{ env.PLAN }}"
         
+    - name: Terraform Change and Destroy check
+      shell: pwsh
+      env: 
+        PLAN: "${{ steps.plan.outputs.stdout }}"
+      run: |
+          terraform show ${{ env.PLAN }}
+        
+
 
     - name: Terraform Plan Status
       if: steps.plan.outcome == 'failure'
