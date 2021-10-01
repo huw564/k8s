@@ -96,16 +96,8 @@ jobs:
         azcliversion: 2.0.72
         inlineScript: |
             echo ${{ env.planname }}
-            echo "$GITHUB_WORKSPACE${{ env.working_directory }}${{ env.tfplanname }}.plan-$GITHUB_RUN_ID"
-            #ls -lahR
-            #echo "github workspace.."
-            #echo "$GITHUB_WORKSPACE"
-            #echo "pwd.."
-            #pwd
-            #echo "working directory.."
-            #echo $working_directory
+            echo $GITHUB_WORKSPACE${{ env.working_directory }}${{ env.tfplanname }}.plan-$GITHUB_RUN_ID
             #az storage blob upload --file "$GITHUB_WORKSPACE$working_directory${{ secrets.tfplanname }}.plan-$GITHUB_RUN_ID"  --account-name "${{ steps.myGetSecretAction.outputs.terraformstorageaccount }}" --account-key "${{ steps.myGetSecretAction.outputs.tf-storage-key }}" -c "${{ steps.myGetSecretAction.outputs.tfplancontainer }}" -n "${{ secrets.tfplanname }}.plan-$GITHUB_RUN_ID"  
-
           
     - name: Terraform Outputs
       env:
