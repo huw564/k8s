@@ -25,4 +25,4 @@ jobs:
           echo "$rg"  
           echo "$tfplanname"
           echo "$GITHUB_RUN_ID"
-          echo "${{ env.tfplanname }}"
+          echo ${{ env.working_directory }}${{ env.tfplanname }}.plan-$GITHUB_RUN_ID
