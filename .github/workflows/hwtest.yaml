@@ -15,8 +15,10 @@ jobs:
       - name: "List working directory"
         run: echo ${{ env.working_directory }}
         
-      - name: "Retreive secret"
+      - name: "Retreive secrets"
         env:
           rg: ${{ secrets.RGNAME1 }}
+          tfplanname:  ${{ secrets.TFPLANNAME }}
         run: |
-          echo "$rg"     
+          echo "$rg"  
+          echo "tfplanname"
