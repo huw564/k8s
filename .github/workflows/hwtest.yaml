@@ -1,4 +1,4 @@
-name: learn-github-actions
+name: hwtest
 
 on: workflow_dispatch
 
