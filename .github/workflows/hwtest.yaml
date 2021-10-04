@@ -165,6 +165,48 @@ jobs:
         working-directory: ${{  env.working_directory  }}
      
     steps: 
+    
+    - uses: actions/checkout@v2
+    - uses: Azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+    - uses: Azure/get-keyvault-secrets@v1
+      with: 
+        keyvault: ${{ secrets.devakv }}
+        secrets: 'terraformrg, SubscriptionID, DevOps-PipelineSP-ID, DevOps-PipelineSP-Secret, tenantid, terraformstorageaccount, tf-storage-key, tfplancontainer, tfstatecontainer'
+      id: myGetSecretAction
+      
+    - uses: cschleiden/replace-tokens@v1
+      with:
+        tokenPrefix: '__'
+        tokenSuffix: '__'
+        files: '["**/*.tf"]'
+      env:
+        terraformstorageaccount: ${{ steps.myGetSecretAction.outputs.terraformstorageaccount }}
+        tfstatecontainer: ${{ steps.myGetSecretAction.outputs.tfstatecontainer }}
+        tf-storage-key: ${{ steps.myGetSecretAction.outputs.tf-storage-key }}
+        tfstatename: ${{ secrets.tfstatename }}
+        rgname1: ${{ secrets.rgname1 }}
+        
+
+        
+    - uses: hashicorp/setup-terraform@v1
+      with: 
+        terraform_version: 0.15.3
+      env:
+        ARM_CLIENT_ID: ${{ steps.myGetSecretAction.outputs.DevOps-PipelineSP-ID }}
+        ARM_CLIENT_SECRET: ${{ steps.myGetSecretAction.outputs.DevOps-PipelineSP-Secret }}
+        ARM_SUBSCRIPTION_ID: ${{ steps.myGetSecretAction.outputs.SubscriptionID }}
+        ARM_TENANT_ID: ${{ steps.myGetSecretAction.outputs.tenantid }}
+
+    - name: Terraform Init
+      id: init
+      run: terraform init
+      env:
+        ARM_CLIENT_ID: ${{ steps.myGetSecretAction.outputs.DevOps-PipelineSP-ID }}
+        ARM_CLIENT_SECRET: ${{ steps.myGetSecretAction.outputs.DevOps-PipelineSP-Secret }}
+        ARM_SUBSCRIPTION_ID: ${{ steps.myGetSecretAction.outputs.SubscriptionID }}
+        ARM_TENANT_ID: ${{ steps.myGetSecretAction.outputs.tenantid }}
        
     - name: Download Plan file
       uses: azure/CLI@v1
