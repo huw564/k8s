@@ -162,8 +162,18 @@ jobs:
         azcliversion: 2.0.72
         inlineScript: |
           az storage blob download --name ${{ env.planname }}.plan-$GITHUB_RUN_ID --file "$GITHUB_WORKSPACE/${{ env.working_directory }}${{ env.planname }}.planforapply" --container-name "${{ steps.myGetSecretAction.outputs.tfplancontainer }}" --account-name "${{ steps.myGetSecretAction.outputs.terraformstorageaccount }}" --account-key "${{ steps.myGetSecretAction.outputs.tf-storage-key }}"
-          
-      
+  
+  apply:
+    env:
+      working_directory: "./infrastructure/test-rg/"
+    environment: test-rg
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: pwsh
+        working-directory: ${{  env.working_directory  }}
+     
+    steps: 
     - name: Terraform Apply
       run: terraform apply -auto-approve ${{ secrets.tfplanname }}.planforapply
       env:
