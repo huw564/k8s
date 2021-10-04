@@ -1,4 +1,4 @@
-name: test-rg
+name: hwtest
 
 on: workflow_dispatch
 
