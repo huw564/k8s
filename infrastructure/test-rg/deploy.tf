@@ -23,6 +23,7 @@ required_providers {
 
 #Resource Group
 resource "azurerm_resource_group" "ResourceGroup1" {
-  name     = "__rgname1__"
+  #name     = "__rgname1__"
+  name     = "hwtest-rg"
   location = "West Europe"
 }
