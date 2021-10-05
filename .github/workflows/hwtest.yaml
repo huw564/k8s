@@ -21,12 +21,7 @@ jobs:
         with:
           envFilePath: ./infrastructure/test-rg/variables.env
           
-      - name: Echo vars
-        shell: pwsh
-        run: |
-          echo "RG ${{ env.RGNAME2 }}"
-
-    
+   
     # checkout the repo
       - uses: actions/checkout@v2   
       - uses: Azure/login@v1
@@ -34,7 +29,7 @@ jobs:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
       - uses: Azure/get-keyvault-secrets@v1
         with: 
-          keyvault: ${{ secrets.devakv }}
+          keyvault: ${{ env.DEVAKV }}
           secrets: 'terraformrg, SubscriptionID, DevOps-PipelineSP-ID, DevOps-PipelineSP-Secret, tenantid, terraformstorageaccount, tf-storage-key, tfplancontainer, tfstatecontainer'
         id: myGetSecretAction
       
@@ -179,6 +174,11 @@ jobs:
           working-directory: ${{  env.working_directory  }}
 
       steps: 
+      
+      - name: Read variable file
+        uses: tw3lveparsecs/github-actions-setvars@v0.1
+        with:
+          envFilePath: ./infrastructure/test-rg/variables.env
 
       - uses: actions/checkout@v2
       - uses: Azure/login@v1
