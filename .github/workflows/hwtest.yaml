@@ -157,7 +157,7 @@ jobs:
     env:
       working_directory: "./infrastructure/test-rg/"
     environment: 
-      name: test-rg
+      name: apply
     runs-on: ubuntu-latest
     needs:  plan
     defaults:
