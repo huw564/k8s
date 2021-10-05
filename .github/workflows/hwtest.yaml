@@ -20,8 +20,13 @@ jobs:
       - name: Set Environment Variables
         uses: tw3lveparsecs/github-actions-setvars@v0.1
         with:
-          envFilePath: /.github/variables/vars.env
-    
+          envFilePath: /.infrastrucutre/test.rg/variables.env
+          
+      - name: Echo vars
+        shell: pwsh
+        run: |
+          echo ${{ env.rgname2 }}
+
     
     # checkout the repo
    
