@@ -25,7 +25,7 @@ jobs:
       - name: Echo vars
         shell: pwsh
         run: |
-          echo ${{ env.rgname2 }}
+          echo "RG ${{ env.rgname2 }}"
 
     
     # checkout the repo
