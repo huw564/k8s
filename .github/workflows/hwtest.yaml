@@ -15,15 +15,16 @@ jobs:
         working-directory: ${{  env.working_directory  }}
         
     steps:
+    
+    # checkout the repo
+      - uses: actions/checkout@v2 
 
       - name: Read variable file
         uses: tw3lveparsecs/github-actions-setvars@v0.1
         with:
-          envFilePath: ./infrastructure/test-rg/variables.env
-          
+          envFilePath: ./infrastructure/test-rg/variables.env          
    
-    # checkout the repo
-      - uses: actions/checkout@v2   
+  
       - uses: Azure/login@v1
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
@@ -175,12 +176,14 @@ jobs:
 
       steps: 
       
+    # checkout the repo
+      - uses: actions/checkout@v2 
+      
       - name: Read variable file
         uses: tw3lveparsecs/github-actions-setvars@v0.1
         with:
           envFilePath: ./infrastructure/test-rg/variables.env
 
-      - uses: actions/checkout@v2
       - uses: Azure/login@v1
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
