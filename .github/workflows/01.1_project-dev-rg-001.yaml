@@ -34,7 +34,7 @@ jobs:
           $variablefile = "${{  env.envFilePath  }}" -split "_" | select -first 1
           write-output "varfile $variablefile"
           if( "${{  env.TFSTATENAME  }}" -notmatch $variablefile){
-          throw "tfstatename does not match the yaml file prefix - please check"
+          throw "tfstatename variable prefix does not match the yaml file prefix - please check variable"
           }
             
       - uses: Azure/login@v1
@@ -178,6 +178,8 @@ jobs:
       env:
         working_directory: "./infrastructure/test-rg/"
         azureenv: "dev"
+        envFilePath: "01.1_project-dev-rg-001_variables.env"        
+        
       environment: 
         name: Dev Apply
       runs-on: ubuntu-latest
@@ -195,7 +197,17 @@ jobs:
       - name: Read variable file
         uses: tw3lveparsecs/github-actions-setvars@v0.1
         with:
-          envFilePath: ./infrastructure/test-rg/${{ env.azureenv }}_variables.env
+          envFilePath: ${{  env.working_directory  }}/${{  env.envFilePath  }}
+        id: getvariables
+   
+      - name: check tfstate name
+        shell: pwsh
+        run: |
+          $variablefile = "${{  env.envFilePath  }}" -split "_" | select -first 1
+          write-output "varfile $variablefile"
+          if( "${{  env.TFSTATENAME  }}" -notmatch $variablefile){
+          throw "tfstatename variable prefix does not match the yaml file prefix - please check variable"
+          }
 
       - uses: Azure/login@v1
         with:
