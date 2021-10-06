@@ -170,6 +170,7 @@ jobs:
   apply:
       env:
         working_directory: "./infrastructure/test-rg/"
+        azureenv: "dev"
       environment: 
         name: Dev Apply
       runs-on: ubuntu-latest
