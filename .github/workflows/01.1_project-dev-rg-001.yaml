@@ -23,12 +23,15 @@ jobs:
       - name: Read variable file
         uses: tw3lveparsecs/github-actions-setvars@v0.1
         with:
-          envFilePath: ./infrastructure/01_project-env-rg-001/01.1_project-dev-rg-001_variables.env         
+          envFilePath: ./infrastructure/01_project-env-rg-001/01.1_project-dev-rg-001_variables.env
+        id: getvariables
    
       - name: echo a var
         shell: pwsh
+        env: 
+          varoutput: "${{ steps.getvariables.outputs.stdout }}"
         run: |
-          echo "${{ env.envFilePath }}"
+          echo "${{ env.varoutput }}"
             
       - uses: Azure/login@v1
         with:
