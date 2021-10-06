@@ -32,7 +32,7 @@ jobs:
         shell: pwsh
         run: |
           $variablePrefix = "${{  env.envFilePath  }}" -split "_" | select -first 1
-          write-output "varprefix $variablefile"
+          write-output "varprefix $variablePrefix"
           $statePrefix = "${{  env.TFSTATENAME  }}" -split "_" | select -first 1
           write-output "stateprefix $statePrefix"
           if( $statePrefix -notmatch  $variablePrefix ){
@@ -206,7 +206,7 @@ jobs:
         shell: pwsh
         run: |
           $variablePrefix = "${{  env.envFilePath  }}" -split "_" | select -first 1
-          write-output "varprefix $variablefile"
+          write-output "varprefix $variablePrefix"
           $statePrefix = "${{  env.TFSTATENAME  }}" -split "_" | select -first 1
           write-output "stateprefix $statePrefix"
           if( $statePrefix -notmatch  $variablePrefix ){
