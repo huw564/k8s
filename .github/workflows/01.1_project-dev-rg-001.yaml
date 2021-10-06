@@ -1,7 +1,12 @@
 name: 01.1_project-dev-rg-001
 
+on:
+  workflow_dispatch:
+    inputs:
+      envName: 
+        default: "Dev"
 
-on: workflow_dispatch
+
 
 env:
   working_directory: "./infrastructure/01_project-env-rg-001/"
@@ -14,7 +19,9 @@ jobs:
 
   plan:
       
-    environment: "Dev Plan"
+    environment:
+      name: "${{ github.event.inputs.envname }} Plan"
+    
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -182,8 +189,8 @@ jobs:
 
   apply:
        
-      environment: 
-        name: Dev Apply
+      environment:
+        name: "${{ github.event.inputs.envname }} Apply"
       runs-on: ubuntu-latest
       needs:  plan
       defaults:
