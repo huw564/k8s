@@ -1,22 +1,20 @@
 name: 01.1_project-dev-rg-001
 
+
+on: workflow_dispatch
+
 env:
   working_directory: "./infrastructure/01_project-env-rg-001/"
   azureenv: "dev"
   envFilePath: "01.1_project-dev-rg-001_variables.env"
   
-  
-on:
-  workflow_dispatch:
-    inputs:
-      envName: "Dev"
+
       
 jobs:
 
   plan:
       
-    environment: 
-      name: ${{ github.event.inputs.envName }} Plan
+    environment: "Dev Plan"
     runs-on: ubuntu-latest
     defaults:
       run:
