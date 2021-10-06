@@ -8,7 +8,7 @@ jobs:
     env:
       working_directory: "./infrastructure/test-rg/"
       azureenv: "Dev Plan"
-    environment: ${{  env.azureenv  }}
+    environment: "Dev Plan"
     runs-on: ubuntu-latest
     defaults:
       run:
