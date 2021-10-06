@@ -178,9 +178,9 @@ jobs:
 
   apply:
       env:
-        working_directory: "./infrastructure/test-rg/"
+        working_directory: "./infrastructure/01_project-env-rg-001/"
         azureenv: "dev"
-        envFilePath: "01.1_project-dev-rg-001_variables.env"        
+        envFilePath: "01.1_project-dev-rg-001_variables.env"
         
       environment: 
         name: Dev Apply
