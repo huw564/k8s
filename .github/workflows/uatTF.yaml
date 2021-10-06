@@ -170,6 +170,7 @@ jobs:
   apply:
       env:
         working_directory: "./infrastructure/test-rg/"
+        azureenv: "uat"
       environment: 
         name: UAT Apply
       runs-on: ubuntu-latest
