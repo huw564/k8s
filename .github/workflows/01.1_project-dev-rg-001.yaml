@@ -31,9 +31,11 @@ jobs:
       - name: check tfstate name
         shell: pwsh
         run: |
-          $variablefile = "${{  env.envFilePath  }}" -split "_" | select -first 1
-          write-output "varfile $variablefile"
-          if( "${{  env.TFSTATENAME  }}" -notmatch $variablefile){
+          $variablePrefix = "${{  env.envFilePath  }}" -split "_" | select -first 1
+          write-output "varprefix $variablefile"
+          $statePrefix = "${{  env.TFSTATENAME  }}" -split "_" | select -first 1
+          write-output "stateprefix $statePrefix"
+          if( $statePrefix -notmatch  $variablePrefix ){
           throw "tfstatename variable prefix does not match the yaml file prefix - please check variable"
           }
             
@@ -203,9 +205,11 @@ jobs:
       - name: check tfstate name
         shell: pwsh
         run: |
-          $variablefile = "${{  env.envFilePath  }}" -split "_" | select -first 1
-          write-output "varfile $variablefile"
-          if( "${{  env.TFSTATENAME  }}" -notmatch $variablefile){
+          $variablePrefix = "${{  env.envFilePath  }}" -split "_" | select -first 1
+          write-output "varprefix $variablefile"
+          $statePrefix = "${{  env.TFSTATENAME  }}" -split "_" | select -first 1
+          write-output "stateprefix $statePrefix"
+          if( $statePrefix -notmatch  $variablePrefix ){
           throw "tfstatename variable prefix does not match the yaml file prefix - please check variable"
           }
 
