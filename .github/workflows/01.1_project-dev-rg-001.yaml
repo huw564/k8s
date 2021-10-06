@@ -1,4 +1,4 @@
-name: 01.1_project-env-rg-001
+name: 01.1_project-dev-rg-001
 
 on:
   workflow_dispatch:
