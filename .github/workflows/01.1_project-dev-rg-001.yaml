@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       envName: 
-        default: "Dev"
+        default: ${{ env.tempazureenv }}
 
 
 
@@ -12,6 +12,7 @@ env:
   working_directory: "./infrastructure/01_project-env-rg-001/"
   azureenv: "dev"
   envFilePath: "01.1_project-dev-rg-001_variables.env"
+  tempazureenv: "Dev"
   
 
       
