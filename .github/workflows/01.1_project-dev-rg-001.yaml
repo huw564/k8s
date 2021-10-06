@@ -4,15 +4,14 @@ on:
   workflow_dispatch:
     inputs:
       envName: 
-        default: ${{ env.tempazureenv }}
+        default: "dev"
 
 
 
 env:
   working_directory: "./infrastructure/01_project-env-rg-001/"
-  azureenv: "dev"
-  envFilePath: "01.1_project-dev-rg-001_variables.env"
-  tempazureenv: "Dev"
+  envFilePath: "01.1_project-{{ github.event.inputs.envname }}-rg-001_variables.env"
+  
   
 
       
@@ -21,7 +20,7 @@ jobs:
   plan:
       
     environment:
-      name: "${{ github.event.inputs.envname }} Plan"
+      name: "${{ github.event.inputs.envname }}_plan"
     
     runs-on: ubuntu-latest
     defaults:
@@ -191,7 +190,7 @@ jobs:
   apply:
        
       environment:
-        name: "${{ github.event.inputs.envname }} Apply"
+        name: "${{ github.event.inputs.envname }}_apply"
       runs-on: ubuntu-latest
       needs:  plan
       defaults:
