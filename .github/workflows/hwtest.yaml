@@ -25,7 +25,11 @@ jobs:
         with:
           envFilePath: ./infrastructure/test-rg/dev_variables.env          
    
-  
+      - name: echo a var
+        shell: pwsh
+        run: |
+           echo "${{ env.azureenv }}"
+            
       - uses: Azure/login@v1
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
