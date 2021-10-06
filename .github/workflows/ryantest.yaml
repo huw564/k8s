@@ -1,13 +1,18 @@
 name: ryantest
 
-on: workflow_dispatch
+on:
+  workflow_dispatch:
+    inputs:
+      envName: 
+        default: "test-rg"
 
 jobs:
 
   build:
     env:
       working_directory: "./infrastructure/test-rg/"
-    environment: ryantest-rg
+    environment:
+      name: ${{ github.event.inputs.envname }}
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -24,150 +29,3 @@ jobs:
         keyvault: ${{ secrets.devakv }}
         secrets: 'terraformrg, SubscriptionID, DevOps-PipelineSP-ID, DevOps-PipelineSP-Secret, tenantid, terraformstorageaccount, tf-storage-key, tfplancontainer, tfstatecontainer'
       id: myGetSecretAction
-      
-    - uses: cschleiden/replace-tokens@v1
-      with:
-        tokenPrefix: '__'
-        tokenSuffix: '__'
-        files: '["**/*.tf"]'
-      env:
-        terraformstorageaccount: ${{ steps.myGetSecretAction.outputs.terraformstorageaccount }}
-        tfstatecontainer: ${{ steps.myGetSecretAction.outputs.tfstatecontainer }}
-        tf-storage-key: ${{ steps.myGetSecretAction.outputs.tf-storage-key }}
-        tfstatename: ${{ secrets.tfstatename }}
-        rgname1: ${{ secrets.rgname1 }}
-        
-
-        
-    - uses: hashicorp/setup-terraform@v1
-      with: 
-        terraform_version: 0.15.3
-      env:
-        ARM_CLIENT_ID: ${{ steps.myGetSecretAction.outputs.DevOps-PipelineSP-ID }}
-        ARM_CLIENT_SECRET: ${{ steps.myGetSecretAction.outputs.DevOps-PipelineSP-Secret }}
-        ARM_SUBSCRIPTION_ID: ${{ steps.myGetSecretAction.outputs.SubscriptionID }}
-        ARM_TENANT_ID: ${{ steps.myGetSecretAction.outputs.tenantid }}
-
-    - name: Terraform Init
-      id: init
-      run: terraform init
-      env:
-        ARM_CLIENT_ID: ${{ steps.myGetSecretAction.outputs.DevOps-PipelineSP-ID }}
-        ARM_CLIENT_SECRET: ${{ steps.myGetSecretAction.outputs.DevOps-PipelineSP-Secret }}
-        ARM_SUBSCRIPTION_ID: ${{ steps.myGetSecretAction.outputs.SubscriptionID }}
-        ARM_TENANT_ID: ${{ steps.myGetSecretAction.outputs.tenantid }}
-
-    - name: Terraform Format
-      id: fmt
-      run: terraform fmt
-      env:
-        ARM_CLIENT_ID: ${{ steps.myGetSecretAction.outputs.DevOps-PipelineSP-ID }}
-        ARM_CLIENT_SECRET: ${{ steps.myGetSecretAction.outputs.DevOps-PipelineSP-Secret }}
-        ARM_SUBSCRIPTION_ID: ${{ steps.myGetSecretAction.outputs.SubscriptionID }}
-        ARM_TENANT_ID: ${{ steps.myGetSecretAction.outputs.tenantid }}
-
-
-    - name: Terraform Plan
-      id: plan
-      run: terraform plan -no-color -out="${{ secrets.tfplanname }}.plan-$env:GITHUB_RUN_ID"
-      continue-on-error: false
-      env:
-        ARM_CLIENT_ID: ${{ steps.myGetSecretAction.outputs.DevOps-PipelineSP-ID }}
-        ARM_CLIENT_SECRET: ${{ steps.myGetSecretAction.outputs.DevOps-PipelineSP-Secret }}
-        ARM_SUBSCRIPTION_ID: ${{ steps.myGetSecretAction.outputs.SubscriptionID }}
-        ARM_TENANT_ID: ${{ steps.myGetSecretAction.outputs.tenantid }}
-        
-    - name: Terraform Show
-      id: show
-      run: terraform show "${{ secrets.tfplanname }}.plan-$env:GITHUB_RUN_ID"
-      continue-on-error: false
-      env:
-        ARM_CLIENT_ID: ${{ steps.myGetSecretAction.outputs.DevOps-PipelineSP-ID }}
-        ARM_CLIENT_SECRET: ${{ steps.myGetSecretAction.outputs.DevOps-PipelineSP-Secret }}
-        ARM_SUBSCRIPTION_ID: ${{ steps.myGetSecretAction.outputs.SubscriptionID }}
-        ARM_TENANT_ID: ${{ steps.myGetSecretAction.outputs.tenantid }}
-
-    - name: Upload to blob storage
-      uses: azure/CLI@v1
-      env: 
-        planname: ${{ secrets.tfplanname }}
-        workingdirectory: ${{  env.working_directory  }}
-      with:
-        azcliversion: 2.0.72
-        inlineScript: |
-            echo ${{ env.planname }}
-            echo "$GITHUB_WORKSPACE/${{ env.working_directory }}${{ env.planname }}.plan-$GITHUB_RUN_ID"
-            az storage blob upload --file "$GITHUB_WORKSPACE/${{ env.working_directory }}${{ env.planname }}.plan-$GITHUB_RUN_ID"  --account-name "${{ steps.myGetSecretAction.outputs.terraformstorageaccount }}" --account-key "${{ steps.myGetSecretAction.outputs.tf-storage-key }}" -c "${{ steps.myGetSecretAction.outputs.tfplancontainer }}" -n ${{ env.planname }}.plan-$GITHUB_RUN_ID 
-          
-    - name: Terraform Outputs
-      env:
-        PLAN: "${{ steps.plan.outputs.stdout }}"
-      shell: pwsh
-      run: |
-          Write-Host "Terraform Format and Style ${{ steps.fmt.outcome }}"
-          Write-Host "Terraform Initialization ${{ steps.init.outcome }}"
-          Write-Host "Terraform Plan ${{ steps.plan.outcome }}"
-          echo "${{ env.PLAN }}"
-        
-    - name: Terraform Change and Destroy check
-      id: tfcheck
-      shell: pwsh
-      env: 
-        PLAN: "${{ steps.plan.outputs.stdout }}"
-      run: |
-          echo "${{ env.PLAN }}" | Out-file ./planfile.txt
-          [int]$addcount = ((Get-Content ./planfile.txt | Select-string -Pattern "to destroy." | Out-String).Split(',') | Select-String -Pattern "add" | Out-String).Split(" ")[1]
-          [int]$changecount = ((Get-Content ./planfile.txt | Select-string -Pattern "to destroy." | Out-String).Split(',') | Select-String -Pattern "change" | Out-String).Split(" ")[1]
-          [int]$destroycount = ((Get-Content ./planfile.txt | Select-string -Pattern "to destroy." | Out-String).Split(',') | Select-String -Pattern "destroy" | Out-String).Split(" ")[1]    
-          Write-Host "##[section]$addcount resources are to be added"
-          Write-Host "##[warning]$changecount resources are to be changed"
-          Write-Host "##[error]$destroycount resources are to be destroyed"
-          Write-Host "${{ secrets.tfdestroysallowed }}"
-          ##Check for destroy and whether permitted
-          if ($destroycount -ge 1) { 
-          Write-Host "Destroy detected. Checking if allowed.."
-          if ("${{ secrets.tfdestroysallowed }}" -eq "true") { 
-          Write-Host "##[section]$Authorised Destroy detected"
-          } else { 
-          if ("${{ secrets.tfdestroysallowed }}" -ne "true") { 
-          Write-Host "##[error]Destroy has been detected but not authorised.."
-          throw "Destroy is NOT allowed. Please review this pipeline."
-          }
-          }
-          }
-          
-          ##Check for change and whether permitted
-          if ($changecount -ge 1) { 
-          Write-Host "Change detected. Checking if allowed.."
-          if ("${{ secrets.tfchangesallowed }}" -eq "true") { 
-          write-host "Would proceed"
-          } else { 
-          if ("${{ secrets.tfchangesallowed }}" -ne "true") { 
-          Write-Host "Would not proceed.."
-          throw "Change is NOT allowed. Please review this pipeline."
-          }
-          }
-          }
-        
-    - name: Terraform Plan Status
-      if: steps.tfcheck.outcome == 'failure'
-      run: exit 1
-       
-    - name: Download Plan file
-      uses: azure/CLI@v1
-      env: 
-        planname: ${{ secrets.tfplanname }}
-        workingdirectory: ${{  env.working_directory  }}
-      with:
-        azcliversion: 2.0.72
-        inlineScript: |
-          az storage blob download --name ${{ env.planname }}.plan-$GITHUB_RUN_ID --file "$GITHUB_WORKSPACE/${{ env.working_directory }}${{ env.planname }}.planforapply" --container-name "${{ steps.myGetSecretAction.outputs.tfplancontainer }}" --account-name "${{ steps.myGetSecretAction.outputs.terraformstorageaccount }}" --account-key "${{ steps.myGetSecretAction.outputs.tf-storage-key }}"
-          
-      
-    - name: Terraform Apply
-      run: terraform apply -auto-approve ${{ secrets.tfplanname }}.planforapply
-      env:
-        ARM_CLIENT_ID: ${{ steps.myGetSecretAction.outputs.DevOps-PipelineSP-ID }}
-        ARM_CLIENT_SECRET: ${{ steps.myGetSecretAction.outputs.DevOps-PipelineSP-Secret }}
-        ARM_SUBSCRIPTION_ID: ${{ steps.myGetSecretAction.outputs.SubscriptionID }}
-        ARM_TENANT_ID: ${{ steps.myGetSecretAction.outputs.tenantid }}
