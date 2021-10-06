@@ -31,9 +31,9 @@ jobs:
       - name: check tfstate name
         shell: pwsh
         run: |
-          $variablefile = ${{  env.envFilePath  }} -split "_" | select -first 1
+          $variablefile = "${{  env.envFilePath  }}" -split "_" | select -first 1
           write-output "varfile $variablefile"
-          if( ${{  env.TFSTATENAME  }} -notmatch $variablefile){exit}
+          if( "${{  env.TFSTATENAME  }}" -notmatch $variablefile){exit}
             
       - uses: Azure/login@v1
         with:
