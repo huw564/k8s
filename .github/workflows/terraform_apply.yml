@@ -1,15 +1,37 @@
-  apply:
-       
-      environment:
-        name: "${{ github.event.inputs.envname }}_apply"
-      runs-on: ubuntu-latest
-      needs:  plan
-      defaults:
-        run:
-          shell: pwsh
-          working-directory: ${{  env.working_directory  }}
+name: Terraform Plan
 
-      steps: 
+on:
+  workflow_call:
+    inputs:
+      working_directory:
+        required: true
+        type: string
+      envFilePath:
+        required: true
+        type: string
+      envName:
+        required: true
+        type: string
+    secrets:
+      AZURE_CREDENTIALS:
+        required: true
+        
+        
+jobs:
+
+  apply:
+      
+    environment:
+      name: "${{ inputs.envName }}_plan"
+    
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: pwsh
+        working-directory: ${{  inputs.working_directory  }}
+        
+
+    steps: 
       
     # checkout the repo
       - uses: actions/checkout@v2 
@@ -17,13 +39,13 @@
       - name: Read variable file
         uses: tw3lveparsecs/github-actions-setvars@v0.1
         with:
-          envFilePath: ${{  env.working_directory  }}/${{  env.envFilePath  }}
+          envFilePath: ${{  inputs.working_directory  }}/${{  inputs.envFilePath  }}
         id: getvariables
    
       - name: check tfstate name
         shell: pwsh
         run: |
-          $variablePrefix = "${{  env.envFilePath  }}" -split "_" | select -first 1
+          $variablePrefix = "${{  inputs.envFilePath  }}" -split "_" | select -first 1
           write-output "varprefix $variablePrefix"
           $statePrefix = "${{  env.TFSTATENAME  }}" -split "_" | select -first 1
           write-output "stateprefix $statePrefix"
@@ -75,11 +97,11 @@
         uses: azure/CLI@v1
         env: 
           planname: ${{ env.TFPLANNAME }}
-          workingdirectory: ${{  env.working_directory  }}
+          workingdirectory: ${{  inputs.working_directory  }}
         with:
           azcliversion: 2.0.72
           inlineScript: |
-            az storage blob download --name ${{ env.planname }}.plan-$GITHUB_RUN_ID --file "$GITHUB_WORKSPACE/${{ env.working_directory }}${{ env.planname }}.planforapply" --container-name "${{ steps.myGetSecretAction.outputs.tfplancontainer }}" --account-name "${{ steps.myGetSecretAction.outputs.terraformstorageaccount }}" --account-key "${{ steps.myGetSecretAction.outputs.tf-storage-key }}"
+            az storage blob download --name ${{ env.planname }}.plan-$GITHUB_RUN_ID --file "$GITHUB_WORKSPACE/${{ inputs.working_directory }}${{ env.planname }}.planforapply" --container-name "${{ steps.myGetSecretAction.outputs.tfplancontainer }}" --account-name "${{ steps.myGetSecretAction.outputs.terraformstorageaccount }}" --account-key "${{ steps.myGetSecretAction.outputs.tf-storage-key }}"
       - name: Terraform Apply
         run: terraform apply -auto-approve ${{ env.TFPLANNAME }}.planforapply
         env:
