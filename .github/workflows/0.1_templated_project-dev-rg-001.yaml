@@ -21,7 +21,7 @@ jobs:
     uses: huw564/k8s/.github/workflows/terraform_plan.yml@main
     with:
       working_directory: "./infrastructure/01_project-env-rg-001/"
-      envFilePath: "01.1_project-dev-rg-001_variables.env"
+      envFilePath: "01.1_project-${{ github.event.inputs.envname }}-rg-001_variables.env"
       envName: "dev"
     secrets:
       AZURE_CREDENTIALS: ${{ secrets.AZURE_CREDENTIALS }}
