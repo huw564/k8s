@@ -17,7 +17,7 @@ env:
       
 jobs:
 
-  tf-plan:
+  plan:
     uses: huw564/k8s/.github/workflows/terraform_plan.yml@main
     with:
       working_directory: "./infrastructure/01_project-env-rg-001/"
