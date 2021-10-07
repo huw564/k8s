@@ -22,7 +22,7 @@ jobs:
   apply:
       
     environment:
-      name: "${{ inputs.envName }}_plan"
+      name: "${{ inputs.envName }}_apply"
     
     runs-on: ubuntu-latest
     defaults:
