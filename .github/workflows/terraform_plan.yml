@@ -7,14 +7,14 @@ on:
         required: true
         type: string
       envFilePath:
-        required: false
+        required: true
         type: string
       envName:
-        required: false
+        required: true
         type: string
     secrets:
       AZURE_CREDENTIALS:
-        required: false
+        required: true
         
         
 jobs:
@@ -37,7 +37,7 @@ jobs:
           pwd
           write-output ${{  inputs.working_directory  }}
           write-output ${{ inputs.envFilePath }}
-          $variablePrefix = "${{  env.envFilePath  }}" -split "_" | select -first 1
+          $variablePrefix = "${{  inputs.envFilePath  }}" -split "_" | select -first 1
           write-output "varprefix $variablePrefix"
           $statePrefix = "${{  env.TFSTATENAME  }}" -split "_" | select -first 1
           write-output "stateprefix $statePrefix"
