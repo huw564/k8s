@@ -20,7 +20,7 @@ jobs:
   plan:
     uses: huw564/k8s/.github/workflows/terraform_plan.yml@main
     with:
-      working_directory: "huw564/k8s/infrastructure/01_project-env-rg-001/"
+      working_directory: "/infrastructure/01_project-env-rg-001/"
       envFilePath: "01.1_project-dev-rg-001_variables.env"
       envName: "dev"
     secrets:
