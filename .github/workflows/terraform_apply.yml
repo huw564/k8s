@@ -101,7 +101,7 @@ jobs:
         with:
           azcliversion: 2.0.72
           inlineScript: |
-            az storage blob download --name ${{ env.planname }}.plan-$GITHUB_RUN_ID --file "$GITHUB_WORKSPACE/${{ inputs.working_directory }}${{ env.planname }}.planforapply" --container-name "${{ steps.myGetSecretAction.outputs.tfplancontainer }}" --account-name "${{ steps.myGetSecretAction.outputs.terraformstorageaccount }}" --account-key "${{ steps.myGetSecretAction.outputs.tf-storage-key }}"
+            az storage blob download --name ${{ env.planname }}.plan --file "$GITHUB_WORKSPACE/${{ inputs.working_directory }}${{ env.planname }}.planforapply" --container-name "${{ steps.myGetSecretAction.outputs.tfplancontainer }}" --account-name "${{ steps.myGetSecretAction.outputs.terraformstorageaccount }}" --account-key "${{ steps.myGetSecretAction.outputs.tf-storage-key }}"
       - name: Terraform Apply
         run: terraform apply -auto-approve ${{ env.TFPLANNAME }}.planforapply
         env:
