@@ -7,14 +7,8 @@ on:
         default: "dev"
       working_directory:
         default: "./infrastructure/01_project-env-rg-001/"
-
-
-
-env:
-  working_directory: ../infrastructure/01_project-env-rg-001/"
-  envFilePath: "01.1_project-${{ github.event.inputs.envname }}-rg-001_variables.env"
-  
-  
+      project_id: 
+        default : "01.1"
 
       
 jobs:
@@ -23,8 +17,8 @@ jobs:
     uses: huw564/k8s/.github/workflows/terraform_plan.yml@main
     with:
       working_directory: "${{ github.event.inputs.working_directory }}"
-      envFilePath: "01.1_project-${{ github.event.inputs.envname }}-rg-001_variables.env"
-      envName: "dev"
+      envFilePath: "${{ github.event.inputs.project_id }}_project-${{ github.event.inputs.envname }}-rg-001_variables.env"
+      envName: "${{ github.event.inputs.envName }}"
     secrets:
       AZURE_CREDENTIALS: ${{ secrets.AZURE_CREDENTIALS }}
   apply:
@@ -32,7 +26,7 @@ jobs:
     uses: huw564/k8s/.github/workflows/terraform_apply.yml@main
     with:
       working_directory: "${{ github.event.inputs.working_directory }}"
-      envFilePath: "01.1_project-${{ github.event.inputs.envname }}-rg-001_variables.env"
-      envName: "dev"
+      envFilePath: "${{ github.event.inputs.project_id }}_project-${{ github.event.inputs.envname }}-rg-001_variables.env"
+      envName: "${{ github.event.inputs.envName }}"
     secrets:
       AZURE_CREDENTIALS: ${{ secrets.AZURE_CREDENTIALS }}
