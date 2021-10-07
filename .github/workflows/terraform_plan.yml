@@ -34,6 +34,8 @@ jobs:
       - name: check tfstate name
         shell: pwsh
         run: |
+          write-output ${{  inputs.working_directory  }}
+          write-output ${{ inputs.envFilePath }}
           $variablePrefix = "${{  env.envFilePath  }}" -split "_" | select -first 1
           write-output "varprefix $variablePrefix"
           $statePrefix = "${{  env.TFSTATENAME  }}" -split "_" | select -first 1
