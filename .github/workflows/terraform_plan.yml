@@ -18,9 +18,18 @@ on:
         
         
 jobs:
-  build:
-    runs-on: ubuntu-latest
 
+  build:
+      
+    environment:
+      name: "${{ inputs.envName }}_plan"
+    
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: pwsh
+        working-directory: ${{  inputs.working_directory  }}
+        
     steps:
    # checkout the repo
       - uses: actions/checkout@v2 
