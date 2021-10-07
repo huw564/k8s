@@ -5,6 +5,8 @@ on:
     inputs:
       envName: 
         default: "dev"
+      working_directory:
+        default: "./infrastructure/01_project-env-rg-001/"
 
 
 
@@ -20,7 +22,7 @@ jobs:
   plan:
     uses: huw564/k8s/.github/workflows/terraform_plan.yml@main
     with:
-      working_directory: "${{ env.working_directory }}"
+      working_directory: "${{ github.event.inputs.working_directory }}"
       envFilePath: "01.1_project-${{ github.event.inputs.envname }}-rg-001_variables.env"
       envName: "dev"
     secrets:
@@ -29,7 +31,7 @@ jobs:
     needs:  plan
     uses: huw564/k8s/.github/workflows/terraform_apply.yml@main
     with:
-      working_directory: "./infrastructure/01_project-env-rg-001/"
+      working_directory: "${{ github.event.inputs.working_directory }}"
       envFilePath: "01.1_project-${{ github.event.inputs.envname }}-rg-001_variables.env"
       envName: "dev"
     secrets:
