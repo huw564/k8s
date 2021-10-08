@@ -1,10 +1,14 @@
 name: Terraform Plan
 
 on:
-  push:
-    branches: [ $default-branch ]
-  pull_request:
-    branches: [ $default-branch ]
+  workflow_dispatch:
+    inputs:
+      envName: 
+        default: ""
+        
+env:
+  working_directory: ""
+  envFilePath: ""
 
 jobs:
   build:
