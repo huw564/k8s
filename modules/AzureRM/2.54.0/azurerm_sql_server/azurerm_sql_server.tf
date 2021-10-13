@@ -16,7 +16,7 @@ resource "azurerm_sql_server" "this" {
   # tags - (optional) is a type of map of string
   tags = var.tags
   # version - (required) is a type of string
-  version = var.version
+  version = var.server_version
 
   dynamic "identity" {
     for_each = var.identity

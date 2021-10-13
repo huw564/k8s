@@ -1,7 +1,7 @@
 variable "collation" {
   description = "(optional)"
   type        = string
-  default     = null
+  default     = "SQL_Latin1_General_CP1_CI_AS"
 }
 
 variable "create_mode" {
@@ -161,3 +161,46 @@ variable "timeouts" {
   ))
   default = []
 }
+
+variable "diagnostic_setting_name" {}
+variable "diagnostic_setting_target_resource_id" {}
+variable "diagnostic_setting_existing_resource_id" {default = "__shared-log-analytics-workspace-id__"}
+variable "diagnostic_setting_SQLInsights_enabled" {default = "true"}
+variable "diagnostic_setting_SQLInsights_retention_policy_enabled" {default = "true"}
+variable "diagnostic_setting_SQLInsights_retention_policy_days" {default = "0"}
+variable "diagnostic_setting_AutomaticTuning_enabled" {default = "true"}
+variable "diagnostic_setting_AutomaticTuning_retention_policy_enabled" {default = "true"}
+variable "diagnostic_setting_AutomaticTuning_retention_policy_days" {default = "0"}
+variable "diagnostic_setting_QueryStoreRuntimeStatistics_enabled" {default = "true"}
+variable "diagnostic_setting_QueryStoreRuntimeStatistics_retention_policy_enabled" {default = "true"}
+variable "diagnostic_setting_QueryStoreRuntimeStatistics_retention_policy_days" {default = "0"}
+variable "diagnostic_setting_QueryStoreWaitStatistics_enabled" {default = "true"}
+variable "diagnostic_setting_QueryStoreWaitStatistics_retention_policy_enabled" {default = "true"}
+variable "diagnostic_setting_QueryStoreWaitStatistics_retention_policy_days" {default = "0"}
+variable "diagnostic_setting_Errors_enabled" {default = "true"}
+variable "diagnostic_setting_Errors_retention_policy_enabled" {default = "true"}
+variable "diagnostic_setting_Errors_retention_policy_days" {default = "0"}
+variable "diagnostic_setting_DatabaseWaitStatistics_enabled" {default = "true"}
+variable "diagnostic_setting_DatabaseWaitStatistics_retention_policy_enabled" {default = "true"}
+variable "diagnostic_setting_DatabaseWaitStatistics_retention_policy_days" {default = "0"}
+variable "diagnostic_setting_Timeouts_enabled" {default = "true"}
+variable "diagnostic_setting_Timeouts_retention_policy_enabled" {default = "true"}
+variable "diagnostic_setting_Timeouts_retention_policy_days" {default = "0"}
+variable "diagnostic_setting_Blocks_enabled" {default = "true"}
+variable "diagnostic_setting_Blocks_retention_policy_enabled" {default = "true"}
+variable "diagnostic_setting_Blocks_retention_policy_days" {default = "0"}
+variable "diagnostic_setting_Deadlocks_enabled" {default = "true"}
+variable "diagnostic_setting_Deadlocks_retention_policy_enabled" {default = "true"}
+variable "diagnostic_setting_Deadlocks_retention_policy_days" {default = "0"}
+variable "diagnostic_setting_Basic_enabled" {default = "true"}
+variable "diagnostic_setting_Basic_retention_policy_enabled" {default = "true"}
+variable "diagnostic_setting_InstanceAndAppAdvanced_enabled" {default = "true"}
+variable "diagnostic_setting_InstanceAndAppAdvanced_retention_policy_enabled" {default = "true"}
+variable "diagnostic_setting_WorkloadManagement_enabled" {default = "true"}
+variable "diagnostic_setting_WorkloadManagement_retention_policy_enabled" {default = "true"}
+variable "diagnostic_setting_DevOpsOperationsAudit_enabled" {default = "true"}
+variable "diagnostic_setting_DevOpsOperationsAudit_retention_policy_enabled" {default = "true"}
+variable "diagnostic_setting_DevOpsOperationsAudit_retention_policy_days" {default = "0"}
+variable "diagnostic_setting_SQLSecurityAuditEvents_enabled" {default = "true"}
+variable "diagnostic_setting_SQLSecurityAuditEvents_retention_policy_enabled" {default = "true"}
+variable "diagnostic_setting_SQLSecurityAuditEvents_retention_policy_days" {default = "0"}

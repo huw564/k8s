@@ -87,3 +87,94 @@ resource "azurerm_cosmosdb_account" "this" {
   }
 
 }
+
+resource "azurerm_monitor_diagnostic_setting" "diagnostic_setting" {
+  name                       = var.diagnostic_setting_name
+  target_resource_id         = var.diagnostic_setting_target_resource_id
+  log_analytics_workspace_id = var.diagnostic_setting_existing_resource_id
+  log_analytics_destination_type = var.diagnostic_setting_log_analytics_destination_type
+
+  log {
+    category = "DataPlaneRequests"
+    enabled  = var.diagnostic_setting_DataPlaneRequests_enabled
+    retention_policy {
+      enabled = var.diagnostic_setting_DataPlaneRequests_retention_policy_enabled
+      days = var.diagnostic_setting_DataPlaneRequests_retention_policy_days
+    }
+  }
+    log {
+    category = "MongoRequests"
+    enabled  = var.diagnostic_setting_MongoRequests_enabled
+    retention_policy {
+      enabled = var.diagnostic_setting_MongoRequests_retention_policy_enabled
+      days = var.diagnostic_setting_MongoRequests_retention_policy_days
+    }
+  }
+    log {
+    category = "QueryRuntimeStatistics"
+    enabled  = var.diagnostic_setting_QueryRuntimeStatistics_enabled
+    retention_policy {
+      enabled = var.diagnostic_setting_QueryRuntimeStatistics_retention_policy_enabled
+      days = var.diagnostic_setting_QueryRuntimeStatistics_retention_policy_days
+    }
+    }
+   log {
+    category = "PartitionKeyStatistics"
+    enabled  = var.diagnostic_setting_PartitionKeyStatistics_enabled
+    retention_policy {
+      enabled = var.diagnostic_setting_PartitionKeyStatistics_retention_policy_enabled
+      days = var.diagnostic_setting_PartitionKeyStatistics_retention_policy_days
+    }
+   }
+   log {
+    category = "ControlPlaneRequests"
+    enabled  = var.diagnostic_setting_ControlPlaneRequests_enabled
+    retention_policy {
+      enabled = var.diagnostic_setting_ControlPlaneRequests_retention_policy_enabled
+      days = var.diagnostic_setting_ControlPlaneRequests_retention_policy_days
+    }
+   }
+   log {
+    category = "PartitionKeyRUConsumption"
+    enabled  = var.diagnostic_setting_PartitionKeyRUConsumption_enabled
+    retention_policy {
+      enabled = var.diagnostic_setting_PartitionKeyRUConsumption_retention_policy_enabled
+      days = var.diagnostic_setting_PartitionKeyRUConsumption_retention_policy_days
+    }
+   }
+       log {
+    category = "CassandraRequests"
+    enabled  = var.diagnostic_setting_CassandraRequests_enabled
+    retention_policy {
+      enabled = var.diagnostic_setting_CassandraRequests_retention_policy_enabled
+      days = var.diagnostic_setting_CassandraRequests_retention_policy_days
+    }
+  }
+
+    log {
+    category = "GremlinRequests"
+    enabled  = var.diagnostic_setting_GremlinRequests_enabled
+    retention_policy {
+      enabled = var.diagnostic_setting_GremlinRequests_retention_policy_enabled
+      days = var.diagnostic_setting_GremlinRequests_retention_policy_days
+    }
+  }
+   log {
+     category = "TableApiRequests"
+     enabled = var.diagnostic_setting_TableApiRequests_enabled 
+     retention_policy {
+       enabled = var.diagnostic_setting_TableApiRequests_retention_policy_enabled
+       days = var.diagnostic_setting_TableApiRequests_retention_policy_days
+     }
+   }
+
+
+  metric {
+    category = "Requests"
+    enabled = var.diagnostic_setting_Requests_enabled
+
+    retention_policy {
+      enabled = var.diagnostic_setting_Requests_retention_policy_enabled
+    }
+  }
+}

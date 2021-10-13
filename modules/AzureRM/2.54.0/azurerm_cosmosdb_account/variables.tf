@@ -135,3 +135,37 @@ variable "virtual_network_rule" {
   ))
   default = []
 }
+
+variable "diagnostic_setting_name" {}
+variable "diagnostic_setting_target_resource_id" {}
+variable "diagnostic_setting_existing_resource_id" {default = "__shared-log-analytics-workspace-id__"}
+variable "diagnostic_setting_log_analytics_destination_type" {default = "Dedicated"}
+variable "diagnostic_setting_DataPlaneRequests_enabled" {default = "true"}
+variable "diagnostic_setting_DataPlaneRequests_retention_policy_enabled" {default = "true"}
+variable "diagnostic_setting_DataPlaneRequests_retention_policy_days" {default = "0"}
+variable "diagnostic_setting_MongoRequests_enabled" {default = "true"}
+variable "diagnostic_setting_MongoRequests_retention_policy_enabled" {default = "true"}
+variable "diagnostic_setting_MongoRequests_retention_policy_days" {default = "0"}
+variable "diagnostic_setting_QueryRuntimeStatistics_enabled" {default = "true"}
+variable "diagnostic_setting_QueryRuntimeStatistics_retention_policy_enabled" {default = "true"}
+variable "diagnostic_setting_QueryRuntimeStatistics_retention_policy_days" {default = "0"}
+variable "diagnostic_setting_PartitionKeyStatistics_enabled" {default = "true"}
+variable "diagnostic_setting_PartitionKeyStatistics_retention_policy_enabled" {default = "true"}
+variable "diagnostic_setting_PartitionKeyStatistics_retention_policy_days" {default = "0"}
+variable "diagnostic_setting_ControlPlaneRequests_enabled" {default = "true"}
+variable "diagnostic_setting_ControlPlaneRequests_retention_policy_enabled" {default = "true"}
+variable "diagnostic_setting_ControlPlaneRequests_retention_policy_days" {default = "0"}
+variable "diagnostic_setting_PartitionKeyRUConsumption_enabled" {default = "true"}
+variable "diagnostic_setting_PartitionKeyRUConsumption_retention_policy_enabled" {default = "true"}
+variable "diagnostic_setting_PartitionKeyRUConsumption_retention_policy_days" {default = "0"}
+variable "diagnostic_setting_CassandraRequests_enabled" {default = "true"}
+variable "diagnostic_setting_CassandraRequests_retention_policy_enabled" {default = "true"}
+variable "diagnostic_setting_CassandraRequests_retention_policy_days" {default = "0"}
+variable "diagnostic_setting_GremlinRequests_enabled" {default = "true"}
+variable "diagnostic_setting_GremlinRequests_retention_policy_enabled" {default = "true"}
+variable "diagnostic_setting_GremlinRequests_retention_policy_days" {default = "0"}
+variable "diagnostic_setting_Requests_enabled" {default = "true"}
+variable "diagnostic_setting_Requests_retention_policy_enabled" {default = "true"}
+variable "diagnostic_setting_TableApiRequests_enabled" {default = "true"}
+variable "diagnostic_setting_TableApiRequests_retention_policy_enabled" {default = "true"}
+variable "diagnostic_setting_TableApiRequests_retention_policy_days" {default = "0"}

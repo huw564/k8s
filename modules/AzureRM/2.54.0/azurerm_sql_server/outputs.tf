@@ -16,3 +16,7 @@ output "id" {
 output "this" {
   value = azurerm_sql_server.this
 }
+
+output "name" {
+  value = azurerm_sql_server.this.name
+}

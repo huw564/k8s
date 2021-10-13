@@ -11,7 +11,7 @@ variable "administrator_login_password" {
 variable "connection_policy" {
   description = "(optional)"
   type        = string
-  default     = null
+  default     = "Default"
 }
 
 variable "extended_auditing_policy" {
@@ -43,15 +43,16 @@ variable "resource_group_name" {
   type        = string
 }
 
+variable "server_version" {
+  description = "(required)"
+  type        = string
+  default     = "12.0"
+}
+
 variable "tags" {
   description = "(optional)"
   type        = map(string)
   default     = null
-}
-
-variable "version" {
-  description = "(required)"
-  type        = string
 }
 
 variable "identity" {

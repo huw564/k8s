@@ -95,3 +95,129 @@ resource "azurerm_sql_database" "this" {
   }
 
 }
+
+resource "azurerm_monitor_diagnostic_setting" "this" {
+  name                       = var.diagnostic_setting_name
+  target_resource_id         = var.diagnostic_setting_target_resource_id
+  log_analytics_workspace_id = var.diagnostic_setting_existing_resource_id
+
+  log {
+    category = "SQLInsights"
+    enabled  = var.diagnostic_setting_SQLInsights_enabled
+    retention_policy {
+      enabled = var.diagnostic_setting_SQLInsights_retention_policy_enabled
+      days = var.diagnostic_setting_SQLInsights_retention_policy_days
+    }
+  }
+    log {
+    category = "AutomaticTuning"
+    enabled  = var.diagnostic_setting_AutomaticTuning_enabled
+    retention_policy {
+      enabled = var.diagnostic_setting_AutomaticTuning_retention_policy_enabled
+      days = var.diagnostic_setting_AutomaticTuning_retention_policy_days
+    }
+    }
+    log {
+    category = "QueryStoreRuntimeStatistics"
+    enabled  = var.diagnostic_setting_QueryStoreRuntimeStatistics_enabled
+    retention_policy {
+      enabled = var.diagnostic_setting_QueryStoreRuntimeStatistics_retention_policy_enabled
+      days = var.diagnostic_setting_QueryStoreRuntimeStatistics_retention_policy_days
+    }
+    }
+   log {
+    category = "QueryStoreWaitStatistics"
+    enabled  = var.diagnostic_setting_QueryStoreWaitStatistics_enabled
+    retention_policy {
+      enabled = var.diagnostic_setting_QueryStoreWaitStatistics_retention_policy_enabled
+      days = var.diagnostic_setting_QueryStoreWaitStatistics_retention_policy_days
+    }
+   }
+   log {
+    category = "Errors"
+    enabled  = var.diagnostic_setting_Errors_enabled
+    retention_policy {
+      enabled = var.diagnostic_setting_Errors_retention_policy_enabled
+      days = var.diagnostic_setting_Errors_retention_policy_days
+    }
+   }
+   log {
+    category = "DatabaseWaitStatistics"
+    enabled  = var.diagnostic_setting_DatabaseWaitStatistics_enabled
+    retention_policy {
+      enabled = var.diagnostic_setting_DatabaseWaitStatistics_retention_policy_enabled
+      days = var.diagnostic_setting_DatabaseWaitStatistics_retention_policy_days
+    }
+   }
+       log {
+    category = "Timeouts"
+    enabled  = var.diagnostic_setting_Timeouts_enabled
+    retention_policy {
+      enabled = var.diagnostic_setting_Timeouts_retention_policy_enabled
+      days = var.diagnostic_setting_Timeouts_retention_policy_days
+    }
+  }
+
+         log {
+    category = "Blocks"
+    enabled  = var.diagnostic_setting_Blocks_enabled
+    retention_policy {
+      enabled = var.diagnostic_setting_Blocks_retention_policy_enabled
+      days = var.diagnostic_setting_Blocks_retention_policy_days
+    }
+  }
+
+         log {
+    category = "DevOpsOperationsAudit"
+    enabled  = var.diagnostic_setting_DevOpsOperationsAudit_enabled
+    retention_policy {
+      enabled = var.diagnostic_setting_DevOpsOperationsAudit_retention_policy_enabled
+      days = var.diagnostic_setting_DevOpsOperationsAudit_retention_policy_days
+    }
+  }
+         log {
+    category = "SQLSecurityAuditEvents"
+    enabled  = var.diagnostic_setting_SQLSecurityAuditEvents_enabled
+    retention_policy {
+      enabled = var.diagnostic_setting_SQLSecurityAuditEvents_retention_policy_enabled
+      days = var.diagnostic_setting_SQLSecurityAuditEvents_retention_policy_days
+    }
+  }
+
+        log {
+    category = "Deadlocks"
+    enabled  = var.diagnostic_setting_Deadlocks_enabled
+    retention_policy {
+      enabled = var.diagnostic_setting_Deadlocks_retention_policy_enabled
+      days = var.diagnostic_setting_Deadlocks_retention_policy_days
+    }
+  }
+
+
+  metric {
+    category = "Basic"
+    enabled = var.diagnostic_setting_Basic_enabled
+
+    retention_policy {
+      enabled = var.diagnostic_setting_Basic_retention_policy_enabled
+    }
+  }
+
+    metric {
+    category = "InstanceAndAppAdvanced"
+    enabled = var.diagnostic_setting_InstanceAndAppAdvanced_enabled
+
+    retention_policy {
+      enabled = var.diagnostic_setting_InstanceAndAppAdvanced_retention_policy_enabled
+    }
+  }
+
+    metric {
+    category = "WorkloadManagement"
+    enabled = var.diagnostic_setting_WorkloadManagement_enabled
+
+    retention_policy {
+      enabled = var.diagnostic_setting_WorkloadManagement_retention_policy_enabled
+    }
+  }
+}
