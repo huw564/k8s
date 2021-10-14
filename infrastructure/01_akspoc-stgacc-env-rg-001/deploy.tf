@@ -22,7 +22,7 @@ required_providers {
 
 
 #Resource Group
-resource "azurerm_resource_group" "ResourceGroup1" {
+resource "azurerm_resource_group" "rg1" {
   name     = "__rgname1__"
   location = "West Europe"
 }
@@ -30,9 +30,9 @@ resource "azurerm_resource_group" "ResourceGroup1" {
 
 ##Storage Account 1 ##
 module "StorageAccount1"{
-source = "./modules/AzureRM/2.54.0/azurerm_storage_account"
-location     = azurerm_resource_group.RG.location
-resource_group_name         = azurerm_resource_group.RG.name
+source = "modules/AzureRM/2.54.0/azurerm_storage_account"
+location     = azurerm_resource_group.rg1.location
+resource_group_name         = azurerm_resource_group.rg1.name
 name        = "__storage_account1_name__"
 account_replication_type    = "__storage_account1_replication_type__"
   tags = {
