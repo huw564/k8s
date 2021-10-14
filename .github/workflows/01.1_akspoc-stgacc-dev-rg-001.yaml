@@ -1,0 +1,32 @@
+name: 01.1_akspoc-stgacc-dev-rg-001
+
+on:
+  workflow_dispatch:
+    inputs:
+      envName: 
+        default: "dev"
+      working_directory:
+        default: "./infrastructure/01_akspoc-stgacc-env-rg-001/"
+      project_id: 
+        default : "01.1"
+
+      
+jobs:
+
+  plan:
+    uses: huw564/k8s/.github/workflows/terraform_plan.yml@main
+    with:
+      working_directory: "${{ github.event.inputs.working_directory }}"
+      envFilePath: "${{ github.event.inputs.project_id }}_project-${{ github.event.inputs.envname }}-rg-001_variables.env"
+      envName: "${{ github.event.inputs.envName }}"
+    secrets:
+      AZURE_CREDENTIALS: ${{ secrets.AZURE_CREDENTIALS }}
+  apply:
+    needs:  plan
+    uses: huw564/k8s/.github/workflows/terraform_apply.yml@main
+    with:
+      working_directory: "${{ github.event.inputs.working_directory }}"
+      envFilePath: "${{ github.event.inputs.project_id }}_project-${{ github.event.inputs.envname }}-rg-001_variables.env"
+      envName: "${{ github.event.inputs.envName }}"
+    secrets:
+      AZURE_CREDENTIALS: ${{ secrets.AZURE_CREDENTIALS }}
