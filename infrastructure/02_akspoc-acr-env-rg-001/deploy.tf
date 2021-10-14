@@ -31,6 +31,6 @@ resource "azurerm_resource_group" "rg1" {
 module "acr1"{
 source = "../../modules/AzureRM/2.54.0/azurerm_container_registry"
 name                    = "__acr1_name__"
-location                = azurerm_resource_group.acr1.location
-resource_group_name     = azurerm_resource_group.acr1.name
+location                = azurerm_resource_group.rg1.location
+resource_group_name     = azurerm_resource_group.rg1.name
 }
