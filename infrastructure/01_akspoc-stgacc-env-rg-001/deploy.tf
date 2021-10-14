@@ -30,7 +30,7 @@ resource "azurerm_resource_group" "rg1" {
 
 ##Storage Account 1 ##
 module "StorageAccount1"{
-source = "/modules/AzureRM/2.54.0/azurerm_storage_account"
+source = "../modules/AzureRM/2.54.0/azurerm_storage_account"
 location     = azurerm_resource_group.rg1.location
 resource_group_name         = azurerm_resource_group.rg1.name
 name        = "__storage_account1_name__"
