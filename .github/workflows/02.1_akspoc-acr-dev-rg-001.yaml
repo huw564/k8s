@@ -6,7 +6,7 @@ on:
       envName: 
         default: "dev"
       working_directory:
-        default: "./infrastructure/01_akspoc-acr-env-rg-001/"
+        default: "./infrastructure/02_akspoc-acr-env-rg-001/"
       project_id: 
         default : "02.1"
       project:
