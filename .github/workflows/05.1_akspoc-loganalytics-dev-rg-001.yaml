@@ -8,7 +8,7 @@ on:
       working_directory:
         default: "./infrastructure/05_akspoc-loganalytics-env-rg-001/"
       project_id: 
-        default : "05.1"
+        default: "05.1"
       project:
         default: "akspoc-loganalytics"
 
