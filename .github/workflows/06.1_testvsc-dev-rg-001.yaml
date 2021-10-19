@@ -6,7 +6,7 @@ on:
       envName: 
         default: "dev"
       working_directory:
-        default: "./infrastructure/05_akspoc-loganalytics-env-rg-001/"
+        default: "./infrastructure/06_akspoc-testvsc-env-rg-001/"
       project_id: 
         default : "06.1"
       project:
