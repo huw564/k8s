@@ -1,4 +1,4 @@
-name: 06.1_testvsc-dev-rg-001
+name: 06.1_akspoc-testvsc-dev-rg-001
 
 on:
   workflow_dispatch:
