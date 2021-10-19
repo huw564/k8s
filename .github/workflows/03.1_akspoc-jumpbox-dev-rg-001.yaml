@@ -1,4 +1,4 @@
-name: 06.1_akspoc-sqldb-dev-rg-001
+name: 03.1_akspoc-jumpbox-dev-rg-001
 
 on:
   workflow_dispatch:
@@ -6,11 +6,11 @@ on:
       envName: 
         default: "dev"
       working_directory:
-        default: "./infrastructure/06_akspoc-sqldb-env-rg-001/"
+        default: "./infrastructure/03_akspoc-jumpbox-env-rg-001/"
       project_id: 
-        default : "06.1"
+        default : "03.1"
       project:
-        default: "akspoc-sqldb"
+        default: "akspoc-jumpbox"
 
       
 jobs:

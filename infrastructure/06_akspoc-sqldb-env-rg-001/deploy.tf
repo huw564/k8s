@@ -26,4 +26,3 @@ resource "azurerm_resource_group" "rg1" {
   name     = "__rgname1__"
   location = "West Europe"
 }
-

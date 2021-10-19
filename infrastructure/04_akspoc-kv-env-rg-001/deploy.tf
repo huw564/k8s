@@ -28,13 +28,24 @@ resource "azurerm_resource_group" "rg1" {
 }
 
 
-##Storage Account 1 ##
-module "StorageAccount1"{
-source = "../../modules/AzureRM/2.54.0/azurerm_storage_account"
-location     = azurerm_resource_group.rg1.location
-resource_group_name         = azurerm_resource_group.rg1.name
-name        = "__storage_account1_name__"
-account_replication_type    = "__storage_account1_replication_type__"
+###Key Vault1###
+module "KeyVault1"{
+source = "../../modules/AzureRM/2.54.0/azurerm_key_vault"
+resource_group_name     = azurerm_resource_group.rg1.name
+location = azurerm_resource_group.rg1.location
+name            = "__keyvault1_name__"
+tenantid                = "__tenantid__"
+sku_name                  = "__keyvault1_sku_name__"
+purge_protection_enabled = "__keyvault1_purge_protection_enabled__"
+  access_policy = [{
+    application_id          = null
+    certificate_permissions = []
+    key_permissions         = []
+    object_id               = null
+    secret_permissions      = []
+    storage_permissions     = []
+    tenant_id               = null
+  }]
   tags = {
   "business unit" = "__tag_business_unit__",
   "business owner" = "__tag_business_owner__",  
@@ -47,7 +58,7 @@ account_replication_type    = "__storage_account1_replication_type__"
   "deployment date" = "__tag_deployment_date__",  
   "environment" = "__tag_environment__",
   "resource group" = "__rgname1__",
-  "resource name" = "__storage_account1_name__",
-  "terraform deployed" = "__tag_terraformdeployed__"
+  "resource name" = "__keyvault1_name__",
+  "terraform deployed" = "yes"
 }
 }
