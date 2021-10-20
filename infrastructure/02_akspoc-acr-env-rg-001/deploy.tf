@@ -33,6 +33,7 @@ source = "../../modules/AzureRM/2.54.0/azurerm_container_registry"
  name                  = "__acr1_name__"
  location              = azurerm_resource_group.rg1.location
  resource_group_name   = azurerm_resource_group.rg1.name
+ sku                   = "__acr1_sku__"
   tags = {
   "business unit" = "__tag_business_unit__",
   "business owner" = "__tag_business_owner__",  
