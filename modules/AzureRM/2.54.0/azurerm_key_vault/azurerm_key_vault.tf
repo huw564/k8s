@@ -70,6 +70,7 @@ resource "azurerm_key_vault" "this" {
 
 }
 
+/*
 resource "azurerm_monitor_diagnostic_setting" "diagnostic_setting" {
   name                       = var.diagnostic_setting_name
   target_resource_id         = var.diagnostic_setting_target_resource_id
@@ -93,3 +94,4 @@ resource "azurerm_monitor_diagnostic_setting" "diagnostic_setting" {
   }
  
  }
+*/
