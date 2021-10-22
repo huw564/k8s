@@ -70,28 +70,28 @@ resource "azurerm_key_vault" "this" {
 
 }
 
-/*
-resource "azurerm_monitor_diagnostic_setting" "diagnostic_setting" {
-  name                       = var.diagnostic_setting_name
-  target_resource_id         = var.diagnostic_setting_target_resource_id
-  log_analytics_workspace_id = var.diagnostic_setting_existing_resource_id
+
+#resource "azurerm_monitor_diagnostic_setting" "diagnostic_setting" {
+#  name                       = var.diagnostic_setting_name
+#  target_resource_id         = var.diagnostic_setting_target_resource_id
+#  log_analytics_workspace_id = var.diagnostic_setting_existing_resource_id
  
-      log {
-    category = "AuditEvent"
-    enabled  = var.diagnostic_setting_AuditEvent_enabled
-    retention_policy {
-      enabled = var.diagnostic_setting_AuditEvent_retention_policy_enabled
-      days = var.diagnostic_setting_AuditEvent_retention_policy_days
-    }
-  }
+#      log {
+#    category = "AuditEvent"
+#    enabled  = var.diagnostic_setting_AuditEvent_enabled
+#    retention_policy {
+#      enabled = var.diagnostic_setting_AuditEvent_retention_policy_enabled
+#      days = var.diagnostic_setting_AuditEvent_retention_policy_days
+#    }
+#  }
  
-    metric {
-    category = "AllMetrics"
-    enabled = var.diagnostic_setting_AllMetrics_enabled
-    retention_policy {
-      enabled = var.diagnostic_setting_AllMetrics_retention_policy_enabled
-    }
-  }
- 
- }
-*/
+ #   metric {
+ #   category = "AllMetrics"
+ #   enabled = var.diagnostic_setting_AllMetrics_enabled
+ #   retention_policy {
+ #    enabled = var.diagnostic_setting_AllMetrics_retention_policy_enabled
+ #   }
+ # }
+
+ #}
+
