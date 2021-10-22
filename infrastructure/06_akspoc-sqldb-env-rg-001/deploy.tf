@@ -52,7 +52,7 @@ administrator_login_password  = "__akspoc-sql-admin-login-password__"
   "deployment date" = "__tag_deployment_date__",  
   "environment" = "__tag_environment__",
   "resource group" = "__rgname1__",
-  "resource name" = "__azurerm_sql_server1_name__",
+  "resource name" = "__sql_server1_name__",
   "terraform deployed" = "yes"
 }
 }
