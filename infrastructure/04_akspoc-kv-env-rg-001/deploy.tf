@@ -37,15 +37,7 @@ name            = "__keyvault1_name__"
 tenant_id                = "__tenantid__"
 sku_name                  = "__keyvault1_sku_name__"
 purge_protection_enabled = "__keyvault1_purge_protection_enabled__"
-  access_policy = [{
-    application_id          = null
-    certificate_permissions = []
-    key_permissions         = []
-    object_id               = null
-    secret_permissions      = []
-    storage_permissions     = []
-    tenant_id               = null
-  }]
+  access_policy = []
   tags = {
   "business unit" = "__tag_business_unit__",
   "business owner" = "__tag_business_owner__",  
