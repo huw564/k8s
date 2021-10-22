@@ -32,7 +32,6 @@ module "azurerm_log_analytics_workspace" {
   source = "../../modules/AzureRM/2.54.0/azurerm_log_analytics_workspace"
   location = azurerm_resource_group.rg1.location
   name = "__log_analytics_workspace1_name__"
-  reservation_capcity_in_gb_per_day = "__log_analytics_workspace1_reservation_capcity_in_gb_per_day__"
   resource_group_name = azurerm_resource_group.rg1.name
   retention_in_days = "__log_analytics_workspace1_retention_in_days__"
   sku = "__log_analytics_workspace1_sku__"
