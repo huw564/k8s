@@ -53,21 +53,20 @@ jobs:
           if( $statePrefix -notmatch  $variablePrefix ){
           throw "tfstatename variable prefix does not match the yaml file prefix - please check variable"
           }
-            
       - uses: Azure/login@v1
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
       - uses: Azure/get-keyvault-secrets@v1
         with: 
           keyvault: ${{ env.AKV }}
-          secrets: 'terraformrg, SubscriptionID, DevOps-PipelineSP-ID, DevOps-PipelineSP-Secret, tenantid, terraformstorageaccount, tf-storage-key, tfplancontainer, tfstatecontainer__additionalsecrets__'
+          secrets: 'terraformrg, SubscriptionID, DevOps-PipelineSP-ID, DevOps-PipelineSP-Secret, tenantid, terraformstorageaccount, tf-storage-key, tfplancontainer, tfstatecontainer'
         id: myGetSecretAction
       
       - uses: cschleiden/replace-tokens@v1
         with:
           tokenPrefix: '__'
           tokenSuffix: '__'
-          files: '["**/*.*"]'
+          files: '["**/*.tf"]'
         env:
           terraformstorageaccount: ${{ steps.myGetSecretAction.outputs.terraformstorageaccount }}
           tfstatecontainer: ${{ steps.myGetSecretAction.outputs.tfstatecontainer }}
