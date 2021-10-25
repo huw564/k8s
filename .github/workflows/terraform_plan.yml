@@ -59,7 +59,7 @@ jobs:
       - uses: Azure/get-keyvault-secrets@v1
         with: 
           keyvault: ${{ env.AKV }}
-          secrets: 'terraformrg, SubscriptionID, DevOps-PipelineSP-ID, DevOps-PipelineSP-Secret, tenantid, terraformstorageaccount, tf-storage-key, tfplancontainer, tfstatecontainer'
+          secrets: '*'
         id: myGetSecretAction
       
       - uses: cschleiden/replace-tokens@v1
