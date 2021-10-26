@@ -59,9 +59,9 @@ module "azurerm_kubernetes_cluster" {
     vnet_subnet_id = "__akspoc-subnet1-subnet-id__"
   }]
   linux_profile = [{
-    admin_username = "ryan"
+    admin_username = "devops"
     ssh_key = [{
-      key_data = "${file("//azp//agent//_work//_temp//publickeypem.pub")}"
+      key_data = "__akspoc1-ssh-key__"
     }]
   }]
 
