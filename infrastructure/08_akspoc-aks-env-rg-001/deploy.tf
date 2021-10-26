@@ -61,7 +61,7 @@ module "azurerm_kubernetes_cluster" {
   linux_profile = [{
     admin_username = "devops"
     ssh_key = [{
-      key_data = "__akspoc1-ssh-key__"
+      key_data = ${{ secrets.AKSPOC1_KEY }}
     }]
   }]
 
