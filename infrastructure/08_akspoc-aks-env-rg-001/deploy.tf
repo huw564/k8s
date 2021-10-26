@@ -79,7 +79,7 @@ module "azurerm_kubernetes_cluster" {
   }]
   role_based_access_control = [{
     azure_active_directory = [{
-      admin_group_object_ids = []
+      admin_group_object_ids = ["__akspoc1-admin-group-id__"]
       client_app_id          = null
       server_app_id          = null
       server_app_secret      = null
@@ -89,9 +89,8 @@ module "azurerm_kubernetes_cluster" {
     enabled = true
   }]
 
-  service_principal = [{
-    client_id     = "__akspoc1-sp-client-id__"
-    client_secret = "__akspoc1-sp-client-secret__"
+  identity [{
+    type = "SystemAssigned" 
   }]
 
   windows_profile = [{
