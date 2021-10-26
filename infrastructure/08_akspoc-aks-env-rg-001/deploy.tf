@@ -53,7 +53,7 @@ module "azurerm_kubernetes_cluster" {
     os_disk_type                 = null
     proximity_placement_group_id = null
     tags                         = {}
-    type                         = null
+    type                         = "VirtualMachineScaleSets"
     upgrade_settings = []
     vm_size        = "Standard_D2_v2"
     vnet_subnet_id = "__akspoc-subnet1-subnet-id__"
@@ -91,6 +91,9 @@ module "azurerm_kubernetes_cluster" {
 
   identity = [{
     type = "SystemAssigned" 
+    principal_id = null
+    tenant_id = null
+    user_assigned_identity_id = null
   }]
 
   windows_profile = [{
