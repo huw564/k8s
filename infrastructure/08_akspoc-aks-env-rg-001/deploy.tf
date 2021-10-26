@@ -27,19 +27,13 @@ resource "azurerm_resource_group" "rg1" {
   location = "West Europe"
 }
 
-  
-module "azurerm_virtual_network" {
-  source = "../../modules/AzureRM/2.54.0/azurerm_virtual_network"
-}
 
-  
-  
 module "azurerm_kubernetes_cluster" {
-  source = "../../../modules/AzureRM/2.54.0/azurerm_kubernetes_cluster"
-  dns_prefix = "devopstest"
-  location = "West Europe"
-  name = "DevOpsAKS001"
-  resource_group_name = azurerm_resource_group.RG.name
+  source = "../../modules/AzureRM/2.54.0/azurerm_kubernetes_cluster"
+  dns_prefix = "__aks1_dns_prefix_name__"
+  location = azurerm_resource_group.RG1.location
+  name = "__aks1_name__"
+  resource_group_name = azurerm_resource_group.RG1.name
 
   default_node_pool = [{
     availability_zones           = []
@@ -49,7 +43,7 @@ module "azurerm_kubernetes_cluster" {
     max_count                    = null
     max_pods                     = null
     min_count                    = null
-    name                         = "k8spool"
+    name                         = "__aks1_default_node_pool_name__"
     node_count                   = "1"
     node_labels                  = {}
     node_taints                  = []
@@ -62,7 +56,7 @@ module "azurerm_kubernetes_cluster" {
     type                         = null
     upgrade_settings = []
     vm_size        = "Standard_D2_v2"
-    vnet_subnet_id = module.azurerm_subnet.this.id
+    vnet_subnet_id = "__akspoc-subnet1-subnet-id__"
   }]
   linux_profile = [{
     admin_username = "ryan"
