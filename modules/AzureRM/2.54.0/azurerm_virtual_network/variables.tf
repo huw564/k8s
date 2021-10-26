@@ -80,6 +80,7 @@ variable "timeouts" {
 }
 
 variable "diagnostic_setting_target_resource_id" {}
+variable "diagnostic_setting_name" {}
 variable "diagnostic_setting_existing_resource_id" {default = "__shared-log-analytics-workspace-id__"}
 variable "diagnostic_setting_VMProtectionAlerts_enabled" {default = "true"}
 variable "diagnostic_setting_VMProtectionAlerts_retention_policy_enabled" {default = "true"}
