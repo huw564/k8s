@@ -90,12 +90,12 @@ module "azurerm_kubernetes_cluster" {
   }]
 
   service_principal = [{
-    client_id     = ""
-    client_secret = ""
+    client_id     = "__akspoc1-sp-client-id__"
+    client_secret = "__akspoc1-sp-client-secret__"
   }]
 
   windows_profile = [{
-    admin_username = ""
-    admin_password = ""
+    admin_username = "__akspoc1-admin-username__"
+    admin_password = "__akspoc1-admin-password__"
   }]
 }
