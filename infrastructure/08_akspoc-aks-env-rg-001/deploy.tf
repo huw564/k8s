@@ -82,8 +82,8 @@ module "azurerm_kubernetes_cluster" {
       admin_group_object_ids = []
       client_app_id          = null
       server_app_id          = null
-      server_app_secret      = ""
-      tenant_id              = ""
+      server_app_secret      = null
+      tenant_id              = null
       managed                = true
     }]
     enabled = true
