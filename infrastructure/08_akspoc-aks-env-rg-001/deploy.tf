@@ -89,7 +89,7 @@ module "azurerm_kubernetes_cluster" {
     enabled = true
   }]
 
-  identity [{
+  identity = [{
     type = "SystemAssigned" 
   }]
 
