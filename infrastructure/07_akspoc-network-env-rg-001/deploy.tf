@@ -56,3 +56,27 @@ administrator_login_password  = "__akspoc-sql-admin-login-password__"
   "terraform deployed" = "yes"
 }
 }
+
+  
+module "azurerm_virtual_network" {
+  source = "../../modules/AzureRM/2.54.0/azurerm_virtual_network"
+  address_space = ["__vnet1_address_space__"]
+  location = azurerm_resource_group.rg1.location
+  name = "__vnet1_name__"
+  resource_group_name = azurerm_resource_group.rg1.name
+  tags = {  
+  "business unit" = "__tag_business_unit__",
+  "business owner" = "__tag_business_owner__",  
+  "business technical owner" = "__tag_business_technical_owner__",
+  "managed by" = "__tag_managed_by__",
+  "project" = "__tag_project__", 
+  "application" = "__tag_application__",   
+  "service importance" = "__tag_service_importance__", 
+  "cost centre" = "__tag_cost_centre__",
+  "deployment date" = "__tag_deployment_date__",  
+  "environment" = "__tag_environment__",
+  "resource group" = "__rgname1__",
+  "resource name" = "__vnet1_name__",
+  "terraform deployed" = "yes"
+}
+}
