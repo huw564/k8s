@@ -1,0 +1,114 @@
+name: Terraform Apply
+
+on:
+  workflow_call:
+    inputs:
+      working_directory:
+        required: true
+        type: string
+      envFilePath:
+        required: true
+        type: string
+      envName:
+        required: true
+        type: string
+    secrets:
+      AZURE_CREDENTIALS:
+        required: true
+      AKSPOC1_KEY: 
+        required: true
+        
+        
+jobs:
+
+  apply:
+      
+    environment:
+      name: "${{ inputs.envName }}_apply"
+    
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: pwsh
+        working-directory: ${{  inputs.working_directory  }}
+        
+
+    steps: 
+      
+    # checkout the repo
+      - uses: actions/checkout@v2 
+      
+      - name: Read variable file
+        uses: tw3lveparsecs/github-actions-setvars@v0.1
+        with:
+          envFilePath: ${{  inputs.working_directory  }}/${{  inputs.envFilePath  }}
+        id: getvariables
+   
+      - name: check tfstate name
+        shell: pwsh
+        run: |
+          $variablePrefix = "${{  inputs.envFilePath  }}" -split "_" | select -first 1
+          write-output "varprefix $variablePrefix"
+          $statePrefix = "${{  env.TFSTATENAME  }}" -split "_" | select -first 1
+          write-output "stateprefix $statePrefix"
+          if( $statePrefix -notmatch  $variablePrefix ){
+          throw "tfstatename variable prefix does not match the yaml file prefix - please check variable"
+          }
+      - uses: Azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+      - uses: Azure/get-keyvault-secrets@v1
+        with: 
+          keyvault: ${{ env.AKV }}
+          secrets: 'terraformrg, SubscriptionID, DevOps-PipelineSP-ID, DevOps-PipelineSP-Secret, tenantid, terraformstorageaccount, tf-storage-key, tfplancontainer, tfstatecontainer'
+        id: myGetSecretAction
+
+      - uses: cschleiden/replace-tokens@v1
+        with:
+          tokenPrefix: '__'
+          tokenSuffix: '__'
+          files: '["**/*.tf"]'
+        env:
+          terraformstorageaccount: ${{ steps.myGetSecretAction.outputs.terraformstorageaccount }}
+          tfstatecontainer: ${{ steps.myGetSecretAction.outputs.tfstatecontainer }}
+          tf-storage-key: ${{ steps.myGetSecretAction.outputs.tf-storage-key }}
+          tfstatename: ${{ env.TFSTATENAME }}
+          rgname1: ${{ env.RGNAME1 }}
+          akspoc1key: ${{ secrets.AKSPOC1_KEY }}
+
+
+
+      - uses: hashicorp/setup-terraform@v1
+        with: 
+          terraform_version: 0.15.3
+        env:
+          ARM_CLIENT_ID: ${{ steps.myGetSecretAction.outputs.DevOps-PipelineSP-ID }}
+          ARM_CLIENT_SECRET: ${{ steps.myGetSecretAction.outputs.DevOps-PipelineSP-Secret }}
+          ARM_SUBSCRIPTION_ID: ${{ steps.myGetSecretAction.outputs.SubscriptionID }}
+          ARM_TENANT_ID: ${{ steps.myGetSecretAction.outputs.tenantid }}
+
+      - name: Terraform Init
+        id: init
+        run: terraform init
+        env:
+          ARM_CLIENT_ID: ${{ steps.myGetSecretAction.outputs.DevOps-PipelineSP-ID }}
+          ARM_CLIENT_SECRET: ${{ steps.myGetSecretAction.outputs.DevOps-PipelineSP-Secret }}
+          ARM_SUBSCRIPTION_ID: ${{ steps.myGetSecretAction.outputs.SubscriptionID }}
+          ARM_TENANT_ID: ${{ steps.myGetSecretAction.outputs.tenantid }}
+
+      - name: Download Plan file
+        uses: azure/CLI@v1
+        env: 
+          planname: ${{ env.TFPLANNAME }}
+          workingdirectory: ${{  inputs.working_directory  }}
+        with:
+          azcliversion: 2.0.72
+          inlineScript: |
+            az storage blob download --name ${{ env.planname }}.plan-$GITHUB_RUN_ID --file "$GITHUB_WORKSPACE/${{ inputs.working_directory }}${{ env.planname }}.planforapply" --container-name "${{ steps.myGetSecretAction.outputs.tfplancontainer }}" --account-name "${{ steps.myGetSecretAction.outputs.terraformstorageaccount }}" --account-key "${{ steps.myGetSecretAction.outputs.tf-storage-key }}"
+      - name: Terraform Apply
+        run: terraform apply -auto-approve ${{ env.TFPLANNAME }}.planforapply
+        env:
+          ARM_CLIENT_ID: ${{ steps.myGetSecretAction.outputs.DevOps-PipelineSP-ID }}
+          ARM_CLIENT_SECRET: ${{ steps.myGetSecretAction.outputs.DevOps-PipelineSP-Secret }}
+          ARM_SUBSCRIPTION_ID: ${{ steps.myGetSecretAction.outputs.SubscriptionID }}
+          ARM_TENANT_ID: ${{ steps.myGetSecretAction.outputs.tenantid }}
