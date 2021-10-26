@@ -64,6 +64,7 @@ module "azurerm_virtual_network" {
   location = azurerm_resource_group.rg1.location
   name = "__vnet1_name__"
   resource_group_name = azurerm_resource_group.rg1.name
+  diagnostic_setting_target_resource_id = module.azurerm_virtual_network.this.id
   tags = {  
   "business unit" = "__tag_business_unit__",
   "business owner" = "__tag_business_owner__",  
