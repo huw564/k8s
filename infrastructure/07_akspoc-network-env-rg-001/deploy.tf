@@ -53,7 +53,7 @@ administrator_login_password  = "__akspoc-sql-admin-login-password__"
   "environment" = "__tag_environment__",
   "resource group" = "__rgname1__",
   "resource name" = "__sql_server1_name__",
-  "terraform deployed" = "yes"
+  "terraform deployed" = "__tag_terraformdeployed__"
 }
 }
 
@@ -77,6 +77,6 @@ module "azurerm_virtual_network" {
   "environment" = "__tag_environment__",
   "resource group" = "__rgname1__",
   "resource name" = "__vnet1_name__",
-  "terraform deployed" = "yes"
+  "terraform deployed" = "__tag_terraformdeployed__"
 }
 }
