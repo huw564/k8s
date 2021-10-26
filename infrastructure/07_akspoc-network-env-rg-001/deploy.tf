@@ -80,3 +80,27 @@ module "azurerm_virtual_network" {
   "terraform deployed" = "__tag_terraformdeployed__"
 }
 }
+  
+module "subnet1" {
+  source = "../../modules/AzureRM/2.54.0/azurerm_subnet"
+  address_prefix = "__subnet1_address_prefix__"
+  name = "__subnet1_name__"
+  resource_group_name = azurerm_resource_group.rg1.name
+  virtual_network_name = module.azurerm_virtual_network.this.name
+}
+  
+module "subnet2" {
+  source = "../../modules/AzureRM/2.54.0/azurerm_subnet"
+  address_prefix = "__subnet2_address_prefix__"
+  name = "__subnet2_name__"
+  resource_group_name = azurerm_resource_group.rg1.name
+  virtual_network_name = module.azurerm_virtual_network.this.name
+}
+    
+module "subnet3" {
+  source = "../../modules/AzureRM/2.54.0/azurerm_subnet"
+  address_prefix = "__subnet3_address_prefix__"
+  name = "__subnet3_name__"
+  resource_group_name = azurerm_resource_group.rg1.name
+  virtual_network_name = module.azurerm_virtual_network.this.name
+}
