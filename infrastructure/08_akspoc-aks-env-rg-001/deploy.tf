@@ -31,9 +31,9 @@ resource "azurerm_resource_group" "rg1" {
 module "azurerm_kubernetes_cluster" {
   source = "../../modules/AzureRM/2.54.0/azurerm_kubernetes_cluster"
   dns_prefix = "__aks1_dns_prefix_name__"
-  location = azurerm_resource_group.RG1.location
+  location = azurerm_resource_group.rg1.location
   name = "__aks1_name__"
-  resource_group_name = azurerm_resource_group.RG1.name
+  resource_group_name = azurerm_resource_group.rg1.name
 
   default_node_pool = [{
     availability_zones           = []
