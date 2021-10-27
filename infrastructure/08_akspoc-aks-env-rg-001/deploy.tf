@@ -101,6 +101,26 @@ module "azurerm_kubernetes_cluster" {
     admin_username = "__akspoc1-admin-username__"
     admin_password = "__akspoc1-admin-password__"
   }]
+
+  
+ addon_profile = [{
+    aci_connector_linux = []
+    azure_policy = [{
+      enabled = true
+    }]
+    http_application_routing = []
+    kube_dashboard = []
+    oms_agent = [{
+      enabled                    = true
+      log_analytics_workspace_id = "__shared-log-analytics-workspace-id__"
+      oms_agent_identity = [{
+        client_id                 = null
+        object_id                 = null
+        user_assigned_identity_id = null
+      }]
+    }]
+  }]
+  
 }
   
   module "nodepool1" {
