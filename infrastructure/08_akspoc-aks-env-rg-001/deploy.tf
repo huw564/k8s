@@ -34,7 +34,7 @@ module "azurerm_kubernetes_cluster" {
   location = azurerm_resource_group.rg1.location
   name = "__aks1_name__"
   resource_group_name = azurerm_resource_group.rg1.name
-
+  kubernetes_version = "__aks1_kubernetes_version__"
   default_node_pool = [{
     availability_zones           = []
     enable_auto_scaling          = null
