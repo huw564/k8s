@@ -102,3 +102,14 @@ module "azurerm_kubernetes_cluster" {
     admin_password = "__akspoc1-admin-password__"
   }]
 }
+  
+  module "nodepool1" {
+  source = "../../modules/AzureRM/2.54.0/azurerm_kubernetes_cluster_node_pool"
+  kubernetes_cluster_id = module.azurerm_kubernetes_cluster.this.id
+  name = "__aks1_node_pool1_name__"
+  node_count = 1
+  orchestrator_version = "__aks1_kubernetes_version__"
+  os_type = "Windows"
+  vm_size = "Standard_DS2_v2"
+  tags = {}
+ }
