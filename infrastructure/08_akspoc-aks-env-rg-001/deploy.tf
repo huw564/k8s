@@ -131,5 +131,6 @@ module "azurerm_kubernetes_cluster" {
   orchestrator_version = "__aks1_kubernetes_version__"
   os_type = "Windows"
   vm_size = "Standard_DS2_v2"
+  vnet_subnet_id = "__akspoc-subnet1-subnet-id__"  
   tags = {}
  }
