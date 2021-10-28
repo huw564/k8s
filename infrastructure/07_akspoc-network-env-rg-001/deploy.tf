@@ -207,4 +207,74 @@ subnet_id               = module.subnet2.id
     }]
 }
     
+#Private endpoint - aks cluster
+module "PrivateEndpoint3"{
+source = "../../modules/AzureRM/2.54.0/azurerm_private_endpoint"
+resource_group_name     = azurerm_resource_group.rg1.name
+location = azurerm_resource_group.rg1.location
+name   = "__private_endpoint3_name__"
+subnet_id               = module.subnet1.id
   
+  private_dns_zone_group = [{
+    id                   = null
+    name                 = module.azurerm_private_dns_zone3.this.name
+    private_dns_zone_ids = [module.azurerm_private_dns_zone3.this.id]
+  }]  
+    
+    private_service_connection = [{
+    is_manual_connection           = false
+    name                           = "__private_endpoint3_service_connection_name__"
+    private_connection_resource_id = "__private_endpoint3_connection_resource_id__"
+    private_ip_address             = null
+    request_message                = null
+    subresource_names              = ["__private_endpoint3_subresource_names__"]
+    }]
+}
+   
+#Private endpoint - acr
+module "PrivateEndpoint4"{
+source = "../../modules/AzureRM/2.54.0/azurerm_private_endpoint"
+resource_group_name     = azurerm_resource_group.rg1.name
+location = azurerm_resource_group.rg1.location
+name   = "__private_endpoint4_name__"
+subnet_id               = module.subnet2.id
+  
+  private_dns_zone_group = [{
+    id                   = null
+    name                 = module.azurerm_private_dns_zone4.this.name
+    private_dns_zone_ids = [module.azurerm_private_dns_zone4.this.id]
+  }]  
+    
+    private_service_connection = [{
+    is_manual_connection           = false
+    name                           = "__private_endpoint4_service_connection_name__"
+    private_connection_resource_id = "__private_endpoint4_connection_resource_id__"
+    private_ip_address             = null
+    request_message                = null
+    subresource_names              = ["__private_endpoint4_subresource_names__"]
+    }]
+}
+    
+#Private endpoint - sql
+module "PrivateEndpoint5"{
+source = "../../modules/AzureRM/2.54.0/azurerm_private_endpoint"
+resource_group_name     = azurerm_resource_group.rg1.name
+location = azurerm_resource_group.rg1.location
+name   = "__private_endpoint5_name__"
+subnet_id               = module.subnet2.id
+  
+  private_dns_zone_group = [{
+    id                   = null
+    name                 = module.azurerm_private_dns_zone5.this.name
+    private_dns_zone_ids = [module.azurerm_private_dns_zone5.this.id]
+  }]  
+    
+    private_service_connection = [{
+    is_manual_connection           = false
+    name                           = "__private_endpoint5_service_connection_name__"
+    private_connection_resource_id = "__private_endpoint5_connection_resource_id__"
+    private_ip_address             = null
+    request_message                = null
+    subresource_names              = ["__private_endpoint5_subresource_names__"]
+    }]
+} 
