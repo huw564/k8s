@@ -135,15 +135,6 @@ jobs:
               echo ${{ env.TFPLANNAME }}
               echo "$GITHUB_WORKSPACE/${{ env.working_directory }}${{ env.planname }}.plan-$GITHUB_RUN_ID"
               az storage blob upload --file "$GITHUB_WORKSPACE/${{ inputs.working_directory }}${{ env.planname }}.plan-$GITHUB_RUN_ID"  --account-name "${{ steps.myGetSecretAction.outputs.terraformstorageaccount }}" --account-key "${{ steps.myGetSecretAction.outputs.tf-storage-key }}" -c "${{ steps.myGetSecretAction.outputs.tfplancontainer }}" -n ${{ env.planname }}.plan-$GITHUB_RUN_ID 
-      - name: Terraform Outputs
-        env:
-          PLAN: "${{ steps.plan.outputs.stdout }}"
-        shell: pwsh
-        run: |
-            Write-Host "Terraform Format and Style ${{ steps.fmt.outcome }}"
-            Write-Host "Terraform Initialization ${{ steps.init.outcome }}"
-            Write-Host "Terraform Plan ${{ steps.plan.outcome }}"
-            echo "${{ env.PLAN }}"
         
       - name: Terraform Change and Destroy check
         id: tfcheck
