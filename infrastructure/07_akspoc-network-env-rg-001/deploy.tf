@@ -78,6 +78,14 @@ module "subnet3" {
   virtual_network_name = module.azurerm_virtual_network.this.name
 }
   
+  module "subnet4" {
+  source = "../../modules/AzureRM/2.54.0/azurerm_subnet"
+  address_prefix = "__subnet4_address_prefix__"
+  name = "__subnet4_name__"
+  resource_group_name = azurerm_resource_group.rg1.name
+  virtual_network_name = module.azurerm_virtual_network.this.name
+}
+  
 #Private DNS zone - file storage 
 module "azurerm_private_dns_zone1" {
   source = "../../modules/AzureRM/2.54.0/azurerm_private_dns_zone"
