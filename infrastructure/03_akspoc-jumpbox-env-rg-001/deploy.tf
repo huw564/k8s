@@ -86,3 +86,21 @@ module "azurerm_windows_virtual_machine" {
 }
   
   
+
+  
+  
+  
+  
+  ##bastion
+  odule "azurerm_bastion_host" {
+  source = "../../modules/AzureRM/2.54.0/azurerm_bastion_host"
+  location = null
+  name = null
+  resource_group_name = null
+  ip_configuration = [{
+    name                 = null
+    public_ip_address_id = null
+    subnet_id            = null
+  }]
+
+}
