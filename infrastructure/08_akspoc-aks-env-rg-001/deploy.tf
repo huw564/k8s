@@ -36,6 +36,7 @@ module "azurerm_kubernetes_cluster" {
   resource_group_name = azurerm_resource_group.rg1.name
   kubernetes_version = "__aks1_kubernetes_version__"
   private_cluster_enabled = true
+  private_dns_zone_id = "__aks1_private_dns_zone_id__"
   default_node_pool = [{
     availability_zones           = []
     enable_auto_scaling          = null
