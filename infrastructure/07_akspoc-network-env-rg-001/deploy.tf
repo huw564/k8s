@@ -156,3 +156,19 @@ module "azurerm_private_dns_zone_virtual_network_link2" {
   resource_group_name = azurerm_resource_group.rg1.name
   virtual_network_id = module.azurerm_virtual_network.id
   }
+
+    
+    
+#Private endpoints    
+module "PrivateEndpoint1"{
+source = "../../modules/AzureRM/2.54.0/azurerm_private_endpoint"
+resource_group_name     = azurerm_resource_group.rg1.name
+resource_group_location = azurerm_resource_group.rg1.location
+private_endpoint_name   = "__private_endpoint1_name__"
+subnet_id               = module.subnet2.id
+private_dns_zone_group_name = module.azurerm_private_dns_zone1.this.name
+private_dns_zone_group_ids = module.azurerm_private_dns_zone1.this.id
+service_connection_name  = "__private_endpoint1_service_connection_name__"
+private_connection_resource_id   = "__private_endpoint1_connection_resource_id__"
+subresource_names  = "__private_endpoint1_subresource_names__"
+}
