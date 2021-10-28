@@ -91,12 +91,10 @@ module "azurerm_kubernetes_cluster" {
     enabled = true
   }]
 
-  identity = [{
-    type = "SystemAssigned" 
-    principal_id = null
-    tenant_id = null
-    user_assigned_identity_id = null
-  }]
+  service_principal = [{
+    client_id     = "__akspoc1-sp-client-id__"
+    client_secret = "__akspoc1-sp-client-secret__"
+    }]
 
   windows_profile = [{
     admin_username = "__akspoc1-admin-username__"
