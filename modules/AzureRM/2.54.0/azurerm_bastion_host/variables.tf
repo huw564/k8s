@@ -43,12 +43,3 @@ variable "timeouts" {
   ))
   default = []
 }
-
-variable "diagnostic_setting_name" {}
-variable "diagnostic_setting_target_resource_id" {}
-variable "diagnostic_setting_existing_resource_id" {default = "__shared-log-analytics-workspace-id__"}
-variable "diagnostic_setting_BastionAuditLogs_enabled" {default = "true"}
-variable "diagnostic_setting_BastionAuditLogs_retention_policy_enabled" {default = "true"}
-variable "diagnostic_setting_BastionAuditLogs_retention_policy_days" {default = "0"}
-variable "diagnostic_setting_metric_enabled" {default = "true"}
-variable "diagnostic_setting_metric_retention_policy_enabled" {default = "0"}
