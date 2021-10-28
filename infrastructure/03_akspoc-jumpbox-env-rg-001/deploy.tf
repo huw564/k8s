@@ -35,7 +35,7 @@ locals {
     "01" = {
     name                          = "__nic1_ipconfig1_name__"
     primary                       = null
-    private_ip_address            = "__nic1_ipconfig1_private_ip_address__"
+    private_ip_address            = null
     private_ip_address_allocation = "__nic1_ipconfig1_private_ip_address_allocation__"
     private_ip_address_version    = null
     public_ip_address_id          = null
