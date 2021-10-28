@@ -278,3 +278,12 @@ subnet_id               = module.subnet2.id
     subresource_names              = ["__private_endpoint5_subresource_names__"]
     }]
 } 
+    
+    
+module "azurerm_public_ip" {
+source =  "../../modules/AzureRM/2.54.0/azurerm_public_ip"
+name           = "__public_ip1_name__"
+location = azurerm_resource_group.rg1.location
+resource_group_name     = azurerm_resource_group.rg1.name
+sku            = "__public_ip1_sku__"
+}
