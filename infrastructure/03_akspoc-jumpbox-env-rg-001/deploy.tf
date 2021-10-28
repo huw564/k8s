@@ -92,15 +92,15 @@ module "azurerm_windows_virtual_machine" {
   
   
   ##bastion
-  odule "azurerm_bastion_host" {
+  module "azurerm_bastion_host" {
   source = "../../modules/AzureRM/2.54.0/azurerm_bastion_host"
-  location = null
-  name = null
-  resource_group_name = null
+  location = azurerm_resource_group.rg1.location
+  name = "__bastionhost1_name__"
+  resource_group_name = azurerm_resource_group.rg1.name
   ip_configuration = [{
-    name                 = null
-    public_ip_address_id = null
-    subnet_id            = null
+    name                 = "__bastionhost1_ip_configuration_name__"
+    public_ip_address_id = "__bastionhost1_ip_configuration_public_address_id__"
+    subnet_id            = "__bastionhost1_ip_configuration_subnet_id__"
   }]
 
 }
