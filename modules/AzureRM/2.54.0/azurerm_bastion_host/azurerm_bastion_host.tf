@@ -35,27 +35,3 @@ resource "azurerm_bastion_host" "this" {
   }
 
 }
-
-resource "azurerm_monitor_diagnostic_setting" "diagnostic_setting" {
-  name                       = var.diagnostic_setting_name
-  target_resource_id         = var.diagnostic_setting_target_resource_id
-  log_analytics_workspace_id = var.diagnostic_setting_existing_resource_id
-
-  log {
-    category = "BastionAuditLogs"
-    enabled  = var.diagnostic_setting_BastionAuditLogs_enabled
-    retention_policy {
-      enabled = var.diagnostic_setting_BastionAuditLogs_retention_policy_enabled
-      days = var.diagnostic_setting_BastionAuditLogs_retention_policy_days
-    }
-  }
-
-  metric {
-    category = "AllMetrics"
-    enabled = var.diagnostic_setting_metric_enabled
-
-    retention_policy {
-      enabled = var.diagnostic_setting_metric_retention_policy_enabled
-    }
-  }
-}
