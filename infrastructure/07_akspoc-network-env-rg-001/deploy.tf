@@ -159,7 +159,7 @@ module "azurerm_private_dns_zone_virtual_network_link2" {
 
     
     
-#Private endpoints    
+#Private endpoint - file storage
 module "PrivateEndpoint1"{
 source = "../../modules/AzureRM/2.54.0/azurerm_private_endpoint"
 resource_group_name     = azurerm_resource_group.rg1.name
@@ -182,3 +182,29 @@ subnet_id               = module.subnet2.id
     subresource_names              = ["__private_endpoint1_subresource_names__"]
     }]
 }
+    
+#Private endpoint - blob storage
+module "PrivateEndpoint2"{
+source = "../../modules/AzureRM/2.54.0/azurerm_private_endpoint"
+resource_group_name     = azurerm_resource_group.rg1.name
+location = azurerm_resource_group.rg1.location
+name   = "__private_endpoint2_name__"
+subnet_id               = module.subnet2.id
+  
+  private_dns_zone_group = [{
+    id                   = null
+    name                 = module.azurerm_private_dns_zone2.this.name
+    private_dns_zone_ids = [module.azurerm_private_dns_zone2.this.id]
+  }]  
+    
+    private_service_connection = [{
+    is_manual_connection           = false
+    name                           = "__private_endpoint2_service_connection_name__"
+    private_connection_resource_id = "__private_endpoint2_connection_resource_id__"
+    private_ip_address             = null
+    request_message                = null
+    subresource_names              = ["__private_endpoint2_subresource_names__"]
+    }]
+}
+    
+  
