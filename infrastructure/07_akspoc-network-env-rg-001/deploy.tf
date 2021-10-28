@@ -193,7 +193,7 @@ module "azurerm_private_dns_zone5" {
 module "azurerm_private_dns_zone_virtual_network_link1" {
   source = "../../modules/AzureRM/2.54.0/azurerm_private_dns_zone_virtual_network_link"
   name = "__private_dns_zone_virtual_network_link1__"
-  private_dns_zone_name = module.azurerm_private_dns_zone1.name
+  private_dns_zone_name = module.azurerm_private_dns_zone1.this.name
   resource_group_name = azurerm_resource_group.rg1.name
   virtual_network_id = module.azurerm_virtual_network.id
   tags = {
@@ -216,7 +216,7 @@ module "azurerm_private_dns_zone_virtual_network_link1" {
 module "azurerm_private_dns_zone_virtual_network_link2" {
   source = "../../modules/AzureRM/2.54.0/azurerm_private_dns_zone_virtual_network_link"
   name = "__private_dns_zone_virtual_network_link2__"
-  private_dns_zone_name = module.azurerm_private_dns_zone2.name
+  private_dns_zone_name = module.azurerm_private_dns_zone2.this.name
   resource_group_name = azurerm_resource_group.rg1.name
   virtual_network_id = module.azurerm_virtual_network.id
    tags = {
@@ -239,7 +239,7 @@ module "azurerm_private_dns_zone_virtual_network_link2" {
   module "azurerm_private_dns_zone_virtual_network_link3" {
   source = "../../modules/AzureRM/2.54.0/azurerm_private_dns_zone_virtual_network_link"
   name = "__private_dns_zone_virtual_network_link3__"
-  private_dns_zone_name = module.azurerm_private_dns_zone3.name
+  private_dns_zone_name = module.azurerm_private_dns_zone3.this.name
   resource_group_name = azurerm_resource_group.rg1.name
   virtual_network_id = module.azurerm_virtual_network.id
    tags = {
@@ -261,7 +261,7 @@ module "azurerm_private_dns_zone_virtual_network_link2" {
   module "azurerm_private_dns_zone_virtual_network_link4" {
   source = "../../modules/AzureRM/2.54.0/azurerm_private_dns_zone_virtual_network_link"
   name = "__private_dns_zone_virtual_network_link4__"
-  private_dns_zone_name = module.azurerm_private_dns_zone4.name
+  private_dns_zone_name = module.azurerm_private_dns_zone4.this.name
   resource_group_name = azurerm_resource_group.rg1.name
   virtual_network_id = module.azurerm_virtual_network.id
    tags = {
@@ -283,7 +283,7 @@ module "azurerm_private_dns_zone_virtual_network_link2" {
   module "azurerm_private_dns_zone_virtual_network_link5" {
   source = "../../modules/AzureRM/2.54.0/azurerm_private_dns_zone_virtual_network_link"
   name = "__private_dns_zone_virtual_network_link5__"
-  private_dns_zone_name = module.azurerm_private_dns_zone5.name
+  private_dns_zone_name = module.azurerm_private_dns_zone5.this.name
   resource_group_name = azurerm_resource_group.rg1.name
   virtual_network_id = module.azurerm_virtual_network.id
    tags = {
