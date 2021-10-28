@@ -105,21 +105,6 @@ module "azurerm_private_dns_zone2" {
   source = "../../modules/AzureRM/2.54.0/azurerm_private_dns_zone"
   name = "__private_dns_zone2_name__"
   resource_group_name = azurerm_resource_group.rg1.name
-  tags = {  
-  "business unit" = "__tag_business_unit__",
-  "business owner" = "__tag_business_owner__",  
-  "business technical owner" = "__tag_business_technical_owner__",
-  "managed by" = "__tag_managed_by__",
-  "project" = "__tag_project__", 
-  "application" = "__tag_application__",   
-  "service importance" = "__tag_service_importance__", 
-  "cost centre" = "__tag_cost_centre__",
-  "deployment date" = "__tag_deployment_date__",  
-  "environment" = "__tag_environment__",
-  "resource group" = "__rgname1__",
-  "resource name" = "__private_dns_zone2_name__",
-  "terraform deployed" = "__tag_terraformdeployed__"
-  }
 }
   
 #Private DNS zone - aks cluster  
@@ -127,21 +112,6 @@ module "azurerm_private_dns_zone3" {
   source = "../../modules/AzureRM/2.54.0/azurerm_private_dns_zone"
   name = "__private_dns_zone3_name__"
   resource_group_name = azurerm_resource_group.rg1.name
-  tags = {  
-  "business unit" = "__tag_business_unit__",
-  "business owner" = "__tag_business_owner__",  
-  "business technical owner" = "__tag_business_technical_owner__",
-  "managed by" = "__tag_managed_by__",
-  "project" = "__tag_project__", 
-  "application" = "__tag_application__",   
-  "service importance" = "__tag_service_importance__", 
-  "cost centre" = "__tag_cost_centre__",
-  "deployment date" = "__tag_deployment_date__",  
-  "environment" = "__tag_environment__",
-  "resource group" = "__rgname1__",
-  "resource name" = "__private_dns_zone3_name__",
-  "terraform deployed" = "__tag_terraformdeployed__"
-  }
 }
   
 #Private DNS zone - acr  
@@ -149,21 +119,6 @@ module "azurerm_private_dns_zone4" {
   source = "../../modules/AzureRM/2.54.0/azurerm_private_dns_zone"
   name = "__private_dns_zone4_name__"
   resource_group_name = azurerm_resource_group.rg1.name
-  tags = {  
-  "business unit" = "__tag_business_unit__",
-  "business owner" = "__tag_business_owner__",  
-  "business technical owner" = "__tag_business_technical_owner__",
-  "managed by" = "__tag_managed_by__",
-  "project" = "__tag_project__", 
-  "application" = "__tag_application__",   
-  "service importance" = "__tag_service_importance__", 
-  "cost centre" = "__tag_cost_centre__",
-  "deployment date" = "__tag_deployment_date__",  
-  "environment" = "__tag_environment__",
-  "resource group" = "__rgname1__",
-  "resource name" = "__private_dns_zone4_name__",
-  "terraform deployed" = "__tag_terraformdeployed__"
-  }
 }
 
 #Private DNS zone - sql
@@ -171,21 +126,6 @@ module "azurerm_private_dns_zone5" {
   source = "../../modules/AzureRM/2.54.0/azurerm_private_dns_zone"
   name = "__private_dns_zone5_name__"
   resource_group_name = azurerm_resource_group.rg1.name
-  tags = {  
-  "business unit" = "__tag_business_unit__",
-  "business owner" = "__tag_business_owner__",  
-  "business technical owner" = "__tag_business_technical_owner__",
-  "managed by" = "__tag_managed_by__",
-  "project" = "__tag_project__", 
-  "application" = "__tag_application__",   
-  "service importance" = "__tag_service_importance__", 
-  "cost centre" = "__tag_cost_centre__",
-  "deployment date" = "__tag_deployment_date__",  
-  "environment" = "__tag_environment__",
-  "resource group" = "__rgname1__",
-  "resource name" = "__private_dns_zone5_name__",
-  "terraform deployed" = "__tag_terraformdeployed__"
-  }
 }  
   
   
@@ -196,21 +136,7 @@ module "azurerm_private_dns_zone_virtual_network_link1" {
   private_dns_zone_name = module.azurerm_private_dns_zone1.this.name
   resource_group_name = azurerm_resource_group.rg1.name
   virtual_network_id = module.azurerm_virtual_network.id
-  tags = {
-    "business unit" = "__tag_business_unit__",
-  "business owner" = "__tag_business_owner__",  
-  "business technical owner" = "__tag_business_technical_owner__",
-  "managed by" = "__tag_managed_by__",
-  "project" = "__tag_project__", 
-  "application" = "__tag_application__",   
-  "service importance" = "__tag_service_importance__", 
-  "cost centre" = "__tag_cost_centre__",
-  "deployment date" = "__tag_deployment_date__",  
-  "environment" = "__tag_environment__",
-  "resource group" = "__rgname1__",
-  "resource name" = "__private_dns_zone_virtual_network_link1__",
-  "terraform deployed" = "__tag_terraformdeployed__"}
-  }    
+}  
 
     
 module "azurerm_private_dns_zone_virtual_network_link2" {
@@ -219,21 +145,7 @@ module "azurerm_private_dns_zone_virtual_network_link2" {
   private_dns_zone_name = module.azurerm_private_dns_zone2.this.name
   resource_group_name = azurerm_resource_group.rg1.name
   virtual_network_id = module.azurerm_virtual_network.id
-   tags = {
-   "business unit" = "__tag_business_unit__",
-  "business owner" = "__tag_business_owner__",  
-  "business technical owner" = "__tag_business_technical_owner__",
-  "managed by" = "__tag_managed_by__",
-  "project" = "__tag_project__", 
-  "application" = "__tag_application__",   
-  "service importance" = "__tag_service_importance__", 
-  "cost centre" = "__tag_cost_centre__",
-  "deployment date" = "__tag_deployment_date__",  
-  "environment" = "__tag_environment__",
-  "resource group" = "__rgname1__",
-  "resource name" = "__private_dns_zone_virtual_network_link1__",
-  "terraform deployed" = "__tag_terraformdeployed__"}
-  }
+}
     
 
   module "azurerm_private_dns_zone_virtual_network_link3" {
@@ -242,20 +154,6 @@ module "azurerm_private_dns_zone_virtual_network_link2" {
   private_dns_zone_name = module.azurerm_private_dns_zone3.this.name
   resource_group_name = azurerm_resource_group.rg1.name
   virtual_network_id = module.azurerm_virtual_network.id
-   tags = {
-   "business unit" = "__tag_business_unit__",
-  "business owner" = "__tag_business_owner__",  
-  "business technical owner" = "__tag_business_technical_owner__",
-  "managed by" = "__tag_managed_by__",
-  "project" = "__tag_project__", 
-  "application" = "__tag_application__",   
-  "service importance" = "__tag_service_importance__", 
-  "cost centre" = "__tag_cost_centre__",
-  "deployment date" = "__tag_deployment_date__",  
-  "environment" = "__tag_environment__",
-  "resource group" = "__rgname1__",
-  "resource name" = "__private_dns_zone_virtual_network_link4__",
-  "terraform deployed" = "__tag_terraformdeployed__"}
   }
     
   module "azurerm_private_dns_zone_virtual_network_link4" {
@@ -264,20 +162,6 @@ module "azurerm_private_dns_zone_virtual_network_link2" {
   private_dns_zone_name = module.azurerm_private_dns_zone4.this.name
   resource_group_name = azurerm_resource_group.rg1.name
   virtual_network_id = module.azurerm_virtual_network.id
-   tags = {
-   "business unit" = "__tag_business_unit__",
-  "business owner" = "__tag_business_owner__",  
-  "business technical owner" = "__tag_business_technical_owner__",
-  "managed by" = "__tag_managed_by__",
-  "project" = "__tag_project__", 
-  "application" = "__tag_application__",   
-  "service importance" = "__tag_service_importance__", 
-  "cost centre" = "__tag_cost_centre__",
-  "deployment date" = "__tag_deployment_date__",  
-  "environment" = "__tag_environment__",
-  "resource group" = "__rgname1__",
-  "resource name" = "__private_dns_zone_virtual_network_link4__",
-  "terraform deployed" = "__tag_terraformdeployed__"}
   }
     
   module "azurerm_private_dns_zone_virtual_network_link5" {
@@ -286,18 +170,4 @@ module "azurerm_private_dns_zone_virtual_network_link2" {
   private_dns_zone_name = module.azurerm_private_dns_zone5.this.name
   resource_group_name = azurerm_resource_group.rg1.name
   virtual_network_id = module.azurerm_virtual_network.id
-   tags = {
-   "business unit" = "__tag_business_unit__",
-  "business owner" = "__tag_business_owner__",  
-  "business technical owner" = "__tag_business_technical_owner__",
-  "managed by" = "__tag_managed_by__",
-  "project" = "__tag_project__", 
-  "application" = "__tag_application__",   
-  "service importance" = "__tag_service_importance__", 
-  "cost centre" = "__tag_cost_centre__",
-  "deployment date" = "__tag_deployment_date__",  
-  "environment" = "__tag_environment__",
-  "resource group" = "__rgname1__",
-  "resource name" = "__private_dns_zone_virtual_network_link5__",
-  "terraform deployed" = "__tag_terraformdeployed__"}
   }
