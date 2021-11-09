@@ -92,7 +92,7 @@ module "azurerm_kubernetes_cluster" {
   }]
 
   identity = [{
-    type = "SystemAssigned" 
+    type = "UserAssigned" 
     principal_id = null
     tenant_id = null
     user_assigned_identity_id = "__akspoc1-sp-api-uri__"
