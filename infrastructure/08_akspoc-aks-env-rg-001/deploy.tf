@@ -94,8 +94,8 @@ module "azurerm_kubernetes_cluster" {
   identity = [{
     type = "UserAssigned" 
     principal_id = null
-    tenant_id = null
-    user_assigned_identity_id = "__akspoc1-sp-object-id__"
+    tenant_id = "__tenantid__"
+    user_assigned_identity_id = "__akspoc1-sp-client-id__"
   }]
 
   windows_profile = [{
