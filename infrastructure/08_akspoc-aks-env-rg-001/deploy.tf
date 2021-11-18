@@ -15,7 +15,7 @@ terraform {
 required_providers {
   azurerm = {
     source = "hashicorp/azurerm"
-    version = "2.84.0"
+    version = "2.54.0"
   }
 }
 }
@@ -32,7 +32,7 @@ module "user_assigned_identity1" {
   source = "../../modules/AzureRM/2.54.0/azurerm_user_assigned_identity"
   location = azurerm_resource_group.rg1.location
   name = "__identity1_name__"
-  resource_group_name = azurerm_resource_group.rg1.nam
+  resource_group_name = azurerm_resource_group.rg1.name
 }
 
 ##agentpool identity
@@ -40,7 +40,7 @@ module "user_assigned_identity2" {
   source = "../../modules/AzureRM/2.54.0/azurerm_user_assigned_identity"
   location = azurerm_resource_group.rg1.location
   name = "__identity2_name__"
-  resource_group_name = azurerm_resource_group.rg1.nam
+  resource_group_name = azurerm_resource_group.rg1.name
 }
 module "azurerm_kubernetes_cluster" {
   source = "../../modules/AzureRM/2.54.0/azurerm_kubernetes_cluster"
