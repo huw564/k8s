@@ -42,6 +42,26 @@ module "user_assigned_identity2" {
   name = "__identity2_name__"
   resource_group_name = azurerm_resource_group.rg1.name
 }
+  
+module "azurerm_role_assignment1" {
+  source = "../../modules/AzureRM/2.54.0/azurerm_role_assignment"
+  principal_id = module.user_assigned_identity1.principal_id
+  # role_definition_name - (optional) is a type of string
+  role_definition_name = "Owner"
+  # scope - (required) is a type of string
+  scope = "__network-rg-id__"
+}
+  
+ module "azurerm_role_assignment1" {
+  source = "../../modules/AzureRM/2.54.0/azurerm_role_assignment"
+  principal_id = module.user_assigned_identity2.principal_id
+  # role_definition_name - (optional) is a type of string
+  role_definition_name = "AcrPull"
+  # scope - (required) is a type of string
+  scope = "__acr-rg-id__"
+}
+    
+    
 module "azurerm_kubernetes_cluster" {
   source = "../../modules/AzureRM/2.54.0/azurerm_kubernetes_cluster"
   dns_prefix = "__aks1_dns_prefix_name__"
