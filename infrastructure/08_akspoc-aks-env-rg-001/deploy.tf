@@ -51,6 +51,9 @@ module "azurerm_kubernetes_cluster" {
   kubernetes_version = "__aks1_kubernetes_version__"
   private_cluster_enabled = true
   private_dns_zone_id = "__aks1_private_dns_zone_id__"
+  kubelet_identity_client_id = module.user_assigned_identity2.client_id
+  kubelet_identity_object_id = module.user_assigned_identity2.id
+  kubelet_identity_user_assigned_identity_id = module.user_assigned_identity2.principal_id
   default_node_pool = [{
     availability_zones           = []
     enable_auto_scaling          = null
