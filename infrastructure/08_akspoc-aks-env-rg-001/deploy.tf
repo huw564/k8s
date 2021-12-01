@@ -70,7 +70,7 @@ module "azurerm_role_assignment2" {
   scope = "__network-rg-id__"
 }
      
- module "azurerm_role_assignment3" {
+ module "azurerm_role_assignment4" {
   source = "../../modules/AzureRM/2.54.0/azurerm_role_assignment"
   principal_id = module.user_assigned_identity2.principal_id
   # role_definition_name - (optional) is a type of string
