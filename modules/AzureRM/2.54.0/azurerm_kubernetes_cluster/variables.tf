@@ -293,3 +293,7 @@ variable "windows_profile" {
   ))
   default = []
 }
+
+variable "kubelet_identity_client_id" {}
+variable "kubelet_identity_object_id" {}
+variable "kubelet_identity_user_assigned_identity_id" {}
