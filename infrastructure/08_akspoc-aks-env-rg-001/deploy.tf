@@ -43,7 +43,7 @@ module "user_assigned_identity2" {
   resource_group_name = azurerm_resource_group.rg1.name
 }
   
-module "azurerm_role_assignment1" {
+module "azurerm_role_assignment2" {
   source = "../../modules/AzureRM/2.54.0/azurerm_role_assignment"
   principal_id = module.user_assigned_identity1.principal_id
   # role_definition_name - (optional) is a type of string
