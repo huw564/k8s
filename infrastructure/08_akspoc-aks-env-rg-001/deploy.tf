@@ -78,6 +78,13 @@ module "azurerm_role_assignment2" {
   # scope - (required) is a type of string
   scope = azurerm_resource_group.rg1.id
 }
+   
+ module "azurerm_role_assignment5" {
+  source = "../../modules/AzureRM/2.54.0/azurerm_role_assignment"
+  principal_id = module.user_assigned_identity1.principal_id
+  role_definition_name = "Owner"
+  scope = azurerm_resource_group.rg1.id
+}
     
     
 module "azurerm_kubernetes_cluster" {
