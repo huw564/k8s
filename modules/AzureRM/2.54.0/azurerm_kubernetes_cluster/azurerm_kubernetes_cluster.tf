@@ -296,5 +296,11 @@ resource "azurerm_kubernetes_cluster" "this" {
       admin_username = windows_profile.value["admin_username"]
     }
   }
+  
+  kubelet_identity { 
+  client_id = var.kubelet_identity_client_id
+  object_id = var.kubelet_identity_object_id
+  user_assigned_identity_id = var.kubelet_identity_user_assigned_identity_id
+  }
 
 }
