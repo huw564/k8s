@@ -89,6 +89,15 @@ module "azurerm_role_assignment2" {
     
 module "azurerm_kubernetes_cluster" {
   source = "../../modules/AzureRM/2.54.0/azurerm_kubernetes_cluster"
+  
+    depends_on = [
+    module.azurerm_role_assignment1,
+    module.azurerm_role_assignment2,
+    module.azurerm_role_assignment3,
+    module.azurerm_role_assignment4,
+    module.azurerm_role_assignment5,
+  ]
+  
   dns_prefix = "__aks1_dns_prefix_name__"
   location = azurerm_resource_group.rg1.location
   name = "__aks1_name__"
